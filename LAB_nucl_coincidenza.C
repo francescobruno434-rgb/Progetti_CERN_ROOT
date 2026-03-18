@@ -9,7 +9,12 @@ using namespace std;
 
 
 
+
+
+
 //CURVA DI COINCIDENZA DEGLI SCINTILLATORI GRANDI
+
+
 
 
 //definizione di funzioni che saranno utili
@@ -18,6 +23,27 @@ double err_rel_divisione(double err_num, double err_den){
     double err_rel= pow(err_quad, 0.5);
     return err_rel;
 }
+double EfficiencyFalling(double *x, double *par) {
+  return par[0]/(1+exp((x[0] - par[1])/par[2]))+par[3];
+}
+
+
+double EfficiencyRising(double *x, double *par) {
+  return par[0]/(1+exp((par[1] - x[0])/par[2]))+par[3];
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -33,8 +59,10 @@ double err_rel_divisione(double err_num, double err_den){
 
 void LAB_nucl_coincidenza(){
 
+
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++SCRIVERE SOLO IN QUESTA SEZIONE
-    vector<double> ritardo={40,
+    vector<double> ritardo={
+      40,
         30,
         20,
         10,
@@ -48,9 +76,24 @@ void LAB_nucl_coincidenza(){
         -32,
         -31,
         -28,
-        -26
+        -26,
+        -26,
+        35,
+        33,
+        32,
+        31,
+        28,
+        26,
+        7,
+        -7,
+        3,
+        -3,
+        15,
+        -15
+
     };
-    vector<double> conteggi={3,
+    vector<double> conteggi={
+                3,
         3864,
         1354,
         1368,
@@ -64,26 +107,60 @@ void LAB_nucl_coincidenza(){
         684,
         1291,
         1206,
-        1328
+        1328,
+        1311,
+        252,
+        1261,
+        2431,
+        2251,
+        1991,
+        2041,
+        1311,
+        1341,
+        1319,
+        1359,
+        1443,
+        1324,
     };
-    vector<double> tempo_daq={300,
-        300,
-        100,
-        100,
-        100,
-        100,
-        100,
+    vector<double> tempo_daq={
         300,
         300,
+        100,
+        100,
+        100,
+        100,
+        100,
+        300,
+        300,
         200,
         200,
         200,
         200,
         100,
-        100
+        100,
+        100,
+        300,
+        300,
+        300,
+        200,
+        150,
+        150,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
     };
 
+
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++STOP NON SCRIVERE PIU'
+
+
+
+
+
+
 
 
 
@@ -94,6 +171,7 @@ void LAB_nucl_coincidenza(){
     vector<double> err_ritardo;
     vector<double> err_conteggi;
     vector<double> err_tempo_daq;
+
 
     //ora riempiamo   questi vettori di errori
     //
@@ -117,6 +195,8 @@ void LAB_nucl_coincidenza(){
     }
 
 
+
+
     //ora costruiamo e riempiamo gli arrai con i rate misurati (le coincidenze)
     vector<double> R_mis;;
     vector<double> err_R_mis;
@@ -135,6 +215,8 @@ void LAB_nucl_coincidenza(){
     }
 
 
+
+
     //
     //ora, creiamo il TGraph e il TCanvas
     TCanvas* c1= new TCanvas("c1", "curva di coincidenza", 800, 600);
@@ -143,66 +225,40 @@ void LAB_nucl_coincidenza(){
     //
     gr1->SetMarkerStyle(21);
     //
+   
+    gr1->GetYaxis()->SetRangeUser(0, 15);
+    gr1->GetYaxis()->SetRangeUser(0, 15);
+
+
+    //fit function: SALITA
+     TF1* fit_coin= new TF1("fit_coin", EfficiencyRising, -40, -20, 4); //
+     fit_coin->SetParameters(-13, -37, -0.7, 13);
+     fit_coin->SetLineColor(5);
+     cout<<"FIT SALITA (A SINISTRA)"<<endl;
+     gr1->Fit("fit_coin", "R");
     
-    gr1->GetYaxis()->SetRangeUser(0, 15);
+   
+    //c1->Print("Grafico_coincidenze.png", "png");
 
-    //fit function
-    TF1* fit_coin= new TF1("fit_coin", "[0]+ x*[1]+ [2]*x^2+[3]*x^3+[4]*x^4+[5]*x^5", -40, -27);
+    //FIT FUNCTION: DISCESA
+    TF1* fit_discesa= new TF1("fit_discesa", EfficiencyFalling, 15, 40, 4);
+    fit_discesa->SetParameters(13, 33, 0.2, 0.6);
+    fit_discesa->SetLineColor(3);
+    cout<<"FIT DISCESA (A DESTRA)"<<endl;
+    gr1->Fit("fit_discesa", "R+");
 
-    gr1->GetYaxis()->SetRangeUser(0, 15);
-    gr1->Fit("fit_coin", "R");
+
+    //FIT DEL PLATEAU
+    TF1* fit_plat= new TF1("fit_plat", "[0]", -19, 14);
+    fit_plat->SetParameters(13.5);
+    cout<<"FIT PLATEAU"<<endl;
+    gr1->Fit("fit_plat", "R+");
+
     gr1->Draw("AP.");
-    
-    c1->Print("Grafico_coincidenze.png", "png");
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
