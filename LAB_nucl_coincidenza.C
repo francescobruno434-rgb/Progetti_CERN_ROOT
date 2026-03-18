@@ -9,13 +9,19 @@ using namespace std;
 
 
 
+
+
+
 //CURVA DI COINCIDENZA DEGLI SCINTILLATORI GRANDI
+
+
 
 
 //definizione di funzioni che saranno utili
 double err_rel_divisione(double err_num, double err_den){
     double err_quad= pow(err_num, 2)+ pow(err_den, 2);
-    double err rel= pow(err_quad, 0.5);
+    double err_rel= pow(err_quad, 0.5);
+    return err_rel;
 }
 
 
@@ -30,7 +36,21 @@ double err_rel_divisione(double err_num, double err_den){
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 void LAB_nucl_coincidenza(){
+
 
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++SCRIVERE SOLO IN QUESTA SEZIONE
     vector<double> ritardo={40,
@@ -82,7 +102,14 @@ void LAB_nucl_coincidenza(){
         100
     };
 
+
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++STOP NON SCRIVERE PIU'
+
+
+
+
+
+
 
 
 
@@ -93,6 +120,7 @@ void LAB_nucl_coincidenza(){
     vector<double> err_ritardo;
     vector<double> err_conteggi;
     vector<double> err_tempo_daq;
+
 
     //ora riempiamo   questi vettori di errori
     //
@@ -116,32 +144,64 @@ void LAB_nucl_coincidenza(){
     }
 
 
+
+
     //ora costruiamo e riempiamo gli arrai con i rate misurati (le coincidenze)
-    double* R_mis= new double[lunghezza];
-    double* err_R_mis= new double[lunghezza];
+    vector<double> R_mis;;
+    vector<double> err_R_mis;
     //
     //riempimento del rate
     for(int i=0; i<lunghezza; i++){
-        R_mis[i]= conteggi[i]/tempo_daq[i];
+        double R_misura= conteggi[i]/tempo_daq[i];
+        R_mis.push_back(R_misura);
     }
     //
     //riempimento dell'errore sul rate
     for(int i=0; i<lunghezza; i++){
-        double error_rel= err_rel_divisione(err_conteggi[i], err_tempo_daq[i]);
-        double error_ass= error_rel* R_mis[i];
+        double error_rel= err_rel_divisione(err_conteggi[i]/conteggi[i], err_tempo_daq[i]/tempo_daq[i]);
+        double error_ass= error_rel * R_mis[i];
         err_R_mis.push_back(error_ass);
     }
 
 
+
+
     //
     //ora, creiamo il TGraph e il TCanvas
-    TCanvas* c1= new TCanvas("c1", "curva di coincidenza", 800, 600)
+    TCanvas* c1= new TCanvas("c1", "curva di coincidenza", 800, 600);
     //
-    TGraphErrors* gr1= new TGraphErrors(lunghezza, ritardo.data(), R_mis, err_ritardo.data(), err_R_mis);
+    TGraphErrors* gr1= new TGraphErrors(lunghezza, ritardo.data(), R_mis.data(), err_ritardo.data(), err_R_mis.data());
     //
     gr1->SetMarkerStyle(21);
     //
+   
+    gr1->GetYaxis()->SetRangeUser(0, 15);
     gr1->Draw("AP.");
+   
+    c1->Print("Grafico_coincidenze.png", "png");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -166,3 +226,6 @@ void LAB_nucl_coincidenza(){
 
 
 }
+
+
+
