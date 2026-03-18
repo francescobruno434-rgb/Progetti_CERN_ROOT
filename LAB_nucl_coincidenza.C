@@ -9,12 +9,7 @@ using namespace std;
 
 
 
-
-
-
 //CURVA DI COINCIDENZA DEGLI SCINTILLATORI GRANDI
-
-
 
 
 //definizione di funzioni che saranno utili
@@ -36,21 +31,7 @@ double err_rel_divisione(double err_num, double err_den){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 void LAB_nucl_coincidenza(){
-
 
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++SCRIVERE SOLO IN QUESTA SEZIONE
     vector<double> ritardo={40,
@@ -102,14 +83,7 @@ void LAB_nucl_coincidenza(){
         100
     };
 
-
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++STOP NON SCRIVERE PIU'
-
-
-
-
-
-
 
 
 
@@ -120,7 +94,6 @@ void LAB_nucl_coincidenza(){
     vector<double> err_ritardo;
     vector<double> err_conteggi;
     vector<double> err_tempo_daq;
-
 
     //ora riempiamo   questi vettori di errori
     //
@@ -144,8 +117,6 @@ void LAB_nucl_coincidenza(){
     }
 
 
-
-
     //ora costruiamo e riempiamo gli arrai con i rate misurati (le coincidenze)
     vector<double> R_mis;;
     vector<double> err_R_mis;
@@ -164,8 +135,6 @@ void LAB_nucl_coincidenza(){
     }
 
 
-
-
     //
     //ora, creiamo il TGraph e il TCanvas
     TCanvas* c1= new TCanvas("c1", "curva di coincidenza", 800, 600);
@@ -174,10 +143,16 @@ void LAB_nucl_coincidenza(){
     //
     gr1->SetMarkerStyle(21);
     //
-   
+    
     gr1->GetYaxis()->SetRangeUser(0, 15);
+
+    //fit function
+    TF1* fit_coin= new TF1("fit_coin", "[0]+ x*[1]+ [2]*x^2+[3]*x^3+[4]*x^4+[5]*x^5", -40, -27);
+
+    gr1->GetYaxis()->SetRangeUser(0, 15);
+    gr1->Fit("fit_coin", "R");
     gr1->Draw("AP.");
-   
+    
     c1->Print("Grafico_coincidenze.png", "png");
 
 
@@ -202,30 +177,34 @@ void LAB_nucl_coincidenza(){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
