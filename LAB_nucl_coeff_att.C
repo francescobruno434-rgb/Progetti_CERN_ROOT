@@ -2,10 +2,13 @@
 #include "TCanvas.h"
 #include "TGraphErrors.h"
 #include "TF1.h"
-#include <cmath
-#include<vector>
+#include <cmath>
+#include <vector>
+
 
 using namespace std;
+
+
 
 
 //definizione di funzioni che saranno utili
@@ -18,14 +21,19 @@ double err_rel_divisione(double err_num, double err_den){
 
 
 
+
+
+
+
 void LAB_nucl_coeff_att(){
 
-    //++++++++++++++++++++++++++++++++++++++++++++++SCRIVERE NEI SEGUENTI VETTORI!! 
+
+    //++++++++++++++++++++++++++++++++++++++++++++++SCRIVERE NEI SEGUENTI VETTORI!!
     //vettore delle coincidenze
     vector<double> rate= {0.31796963294187,
         0.267486303987769,
         0.212285350583223,
-        0.205904131905021,
+       
         0.217774547376768,
         0.4543532809 //NB: questa è quella sul tetto
          };
@@ -33,13 +41,14 @@ void LAB_nucl_coeff_att(){
     vector<double> err_rate={0.0210217226114178,
         0.0220484048715267,
         0.0183298550087976,
-        0.0177114127365785,
+       
         0.0186546323932292,
         0.02870389453
     };
     //vettore profondità CALCOLATA DALL'ALTO! il tetto è 0 per intendersi; la misura è in m (contano solo le solette)
     vector<double> profondità={1.39,
         2.32,
+
 
         3.02,
         3.7,
@@ -48,21 +57,45 @@ void LAB_nucl_coeff_att(){
     vector<double> err_profondità={0.014142135623731,
         0.02,
 
+
         0.0244948974278318,
         0.0282842712474619,
         0};
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++NON SCRIVERE PIU'!
 
+
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     TCanvas *c1= new TCanvas("c1", "Misura coeff attenuazione", 800, 600);
     //
-    TGraphErrors* gr1= new TGraphErrors(profondità.data(), rate.data(), err_profondità.data(), err_rate.data() );
+    TGraphErrors* gr1= new TGraphErrors(rate.size(), profondità.data(), rate.data(), err_profondità.data(), err_rate.data() );
     //
     gr1->GetYaxis()->SetRangeUser(0, 0.6);
-    gr1->Draw("AP.");
-    gr1->Print("coeff_attenuazione.png", "png");
+    gr1->GetXaxis()->SetRangeUser(-2, 4);
+   
+   
+    //
+    //funzione di fit
+    TF1* fit= new TF1("fit", "[0]*exp(-[1]*x)");
+    fit->SetParameters(0.6, 0.8);
+    gr1->Fit("fit");
+     gr1->Draw("AP.");
+     //c1->Print("coeff_attenuazione.png", "png");
 
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -80,3 +113,6 @@ void LAB_nucl_coeff_att(){
 
 
 }
+
+
+
