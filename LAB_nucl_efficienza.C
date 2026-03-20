@@ -172,9 +172,9 @@ void LAB_nucl_efficienza(){
     TGraphErrors* gr1= new TGraphErrors(numero_elementi,HV.data(), eff.data(), err_HV.data(), err_eff.data());
     //
     gr1->GetXaxis()->SetTitle("HV (V)");
-    gr1->GetYaxis()->SetTitle("\epsilon");
+    gr1->GetYaxis()->SetTitle("efficienza");
     gr1->SetTitle("Grafico efficienza-tensione per scintillatore B");
-     gr1->SetMinimum(-1);
+     gr1->SetMinimum(-0.3);
      gr1->SetMarkerStyle(21);
      TF1* fit_eff= new TF1("fit_eff", EfficiencyRising, 1950, 2400, 3);
       fit_eff->SetParameters(1, 2100, 11);
@@ -184,6 +184,7 @@ void LAB_nucl_efficienza(){
     c1->Print("Grafico_eff_HV.png", "png");
     cout<<"il p value di Hv-efficienza è"<<endl;
     double p= fit_eff->GetProb();
+    cout<<p<<endl;
 
 
 
