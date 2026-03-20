@@ -224,6 +224,9 @@ void LAB_nucl_coincidenza(){
     TGraphErrors* gr1= new TGraphErrors(lunghezza, ritardo.data(), R_mis.data(), err_ritardo.data(), err_R_mis.data());
     //
     gr1->SetMarkerStyle(21);
+    gr1->GetXaxis()->SetTitle("delay (ns)");
+    gr1->GetYaxis()->SetTitle("Rate di coincidenze (Hz)");
+    gr1->SetTitle("Curva di coincidenza");
     //
    
     gr1->GetYaxis()->SetRangeUser(0, 15);
@@ -231,28 +234,34 @@ void LAB_nucl_coincidenza(){
 
 
     //fit function: SALITA
-     TF1* fit_coin= new TF1("fit_coin", EfficiencyRising, -40, -20, 4); //
+     TF1* fit_coin= new TF1("fit_coin", EfficiencyRising, -40, 0, 4); //
      fit_coin->SetParameters(-13, -37, -0.7, 13);
-     fit_coin->SetLineColor(5);
+     fit_coin->SetLineColor(7);
      cout<<"FIT SALITA (A SINISTRA)"<<endl;
      gr1->Fit("fit_coin", "R");
+     cout<<"il p value e: "<<endl;
+     cout<<fit_coin->GetProb()<<endl;
     
    
     //c1->Print("Grafico_coincidenze.png", "png");
 
     //FIT FUNCTION: DISCESA
-    TF1* fit_discesa= new TF1("fit_discesa", EfficiencyFalling, 15, 40, 4);
+    TF1* fit_discesa= new TF1("fit_discesa", EfficiencyFalling, 10, 40, 4);
     fit_discesa->SetParameters(13, 33, 0.2, 0.6);
     fit_discesa->SetLineColor(3);
     cout<<"FIT DISCESA (A DESTRA)"<<endl;
     gr1->Fit("fit_discesa", "R+");
+    cout<<"il p value e: "<<endl;
+     cout<<fit_discesa->GetProb()<<endl;
 
 
     //FIT DEL PLATEAU
-    TF1* fit_plat= new TF1("fit_plat", "[0]", -19, 14);
+    TF1* fit_plat= new TF1("fit_plat", "[0]", -25, 25);
     fit_plat->SetParameters(13.5);
     cout<<"FIT PLATEAU"<<endl;
     gr1->Fit("fit_plat", "R+");
+    cout<<"il p value e: "<<endl;
+     cout<<fit_plat->GetProb()<<endl;
 
     gr1->Draw("AP.");
 
