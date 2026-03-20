@@ -11,6 +11,15 @@ using namespace std;
 //Obiettivo è il calcolo dell'efficienza dei nostri rivelatori; è la prima parte che richiede una serie analisi dati
 
 
+double EfficiencyFalling(double *x, double *par) {
+  return par[0]/(1+exp((x[0] - par[1])/par[2]));
+}
+
+double EfficiencyRising(double *x, double *par) {
+  return par[0]/(1+exp((par[1] - x[0])/par[2]));
+}
+
+
 void LAB_nucl_efficienza(){
     //
     //SCRIVERE QUA**********************************************************************************************************************
@@ -156,14 +165,31 @@ void LAB_nucl_efficienza(){
     //+++++++++++++++++++++++++++++++++++++++++++++++++++GRAFICI+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     //
     //EFFICIENZA-TENSIONE
-    TCanvas* c1= new TCanvas("c1", "\nepsilon - tensione", 800, 600);
+    TCanvas* c1= new TCanvas("c1", "\epsilon - tensione", 800, 600);
     //
     TGraphErrors* gr1= new TGraphErrors(numero_elementi,HV.data(), eff.data(), err_HV.data(), err_eff.data());
     //
+    gr1->GetXaxis()->SetTitle("HV (V)");
+    gr1->GetYaxis()->SetTitle("\epsilon");
+    gr1->SetTitle("Grafico efficienza-tensione per scintillatore B");
     gr1->Draw("AP");
+    c1->Print("Grafico_eff_HV.png", "png");
+
+
+
+
+
+
+    //
+    //GRAFICO   Rsingola-HV
+    TCanvas* c2= new TCanvas("c2", "R_singola-tensione", 800, 600);
+    //
+    TGraphErrors* gr2= new TGraphErrors(numero_elementi, HV.data(), R_singole.data(), err_HV.data(), err_coin_singole.data());
+    gr2->GetXaxis()->SetTitle("HV (V)");
+    gr2->GetYaxis()->SetTitle("R_{singola}");
+    gr1->SetTitle("Grafico conteggi-tensione per scintillatore B");
+    c2->cd();
+    gr2->Draw("AP.");
+    c2->Print("Grafico_R_singola_HV.png", "png");
 
 }
-
-
-
-
