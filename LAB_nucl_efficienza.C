@@ -93,21 +93,21 @@ void LAB_nucl_efficienza(){
     for(vector<double>::const_iterator it= coin_doppie.begin(); it!= coin_doppie.end(); it++){
         double x= *it;
         double err= pow(x, 0.5); 
-        err_HV.push_back(err);
+        err_coin_doppie.push_back(err);
     }
     //
     //riempimento errori su coin_triple
     for(vector<double>::const_iterator it= coin_triple.begin(); it!= coin_triple.end(); it++){
         double x= *it;
         double err= pow(x, 0.5); 
-        err_HV.push_back(err);
+        err_coin_triple.push_back(err);
     }
     //
     //riempimento errori su coin_singole
     for(vector<double>::const_iterator it= coin_singole.begin(); it!= coin_singole.end(); it++){
         double x= *it;
         double err= pow(x, 0.5);
-        err_HV.push_back(err);
+        err_coin_singole.push_back(err);
     }
     //
     //non usiamo più i const iterator, perchè tanto il numero di elementi è determinato dalla lunghezza di HV
