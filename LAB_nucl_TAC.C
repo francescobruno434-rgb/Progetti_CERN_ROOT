@@ -10,6 +10,7 @@ using namespace std;
 
 
 void LAB_nucl_TAC(){
+    char skip_line[3000]; //array spazzatura vuoto, dove ficcheremo le linee da schippare
 
 
     TCanvas* c1= new TCanvas("c1", "gabibbo", 800, 600);
@@ -25,15 +26,20 @@ void LAB_nucl_TAC(){
     int i=0;
     double value_bin=0;
     while(gabibbo.eof()!=1 & i<512){
-        istream& ignore(">");
-        //mi salta fino al sesto simbolo > che segna l'inizio del file
+        if(i<14){
+            gabibbo.getline(skip_line, 3000);
+            i++;
+        }
+        else{
         gabibbo>> value_bin;
         hist->SetBinContent(i, value_bin);
         i++;
+        }
 
     }
     
-    hist->Draw("E");
+    hist->Draw();
+    c1->Print("hist_TAC_161_5.png", "png");
     
 
 
