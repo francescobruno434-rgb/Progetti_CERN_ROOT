@@ -25,7 +25,7 @@ void LAB_nucl_TAC(){
     }
     int i=0;
     double value_bin=0;
-    while(gabibbo.eof()!=1 & i<512){
+    while(gabibbo.eof()!=1 & i<526){
         if(i<14){
             gabibbo.getline(skip_line, 3000);
             i++;
@@ -34,10 +34,16 @@ void LAB_nucl_TAC(){
         gabibbo>> value_bin;
         hist->SetBinContent(i, value_bin);
         i++;
+        //cout<<"bin aggiunto: "<<i<<endl;
+        //cout<<"valore inserito "<<value_bin<<endl;
         }
 
     }
-    
+    TF1* fit= new TF1("fit", "gaus(0)" ); //i parametri della gaussiana sono ampiezza, media e stdv (in ordine)
+    fit->SetParameters(23, 250, 50 );
+    hist->Fit("fit");
+    cout<<"il p-value è :"<<endl;
+    cout<<fit->GetProb()<<endl;
     hist->Draw();
     c1->Print("hist_TAC_161_5.png", "png");
     
