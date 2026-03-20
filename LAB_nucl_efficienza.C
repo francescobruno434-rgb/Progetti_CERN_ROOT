@@ -28,9 +28,9 @@ void LAB_nucl_efficienza(){
     //
     vector<double> coin_doppie={252, 244, 250, 276, 256, 260, 275, 271, 271, 245, 261, 252, 266, 258, 248};
     //
-    vector<double> coin_triple= {238, 113, 30, 3, 1, 0, 1, 13, 72, 164, 248, 243, 259, 249, 245};
+    vector<double> coin_triple= {238, 113, 30, 3, 1, 0.0000000000001, 1, 13, 72, 164, 248, 243, 259, 249, 245};
     //
-    vector<double> coin_singole= {2933, 938, 236, 15, 6, 0, 11, 110, 472, 1509, 3461, 4951, 8427, 12954, 17980};
+    vector<double> coin_singole= {2933, 938, 236, 15, 6, 0.0000000000000001, 11, 110, 472, 1509, 3461, 4951, 8427, 12954, 17980};
     //
     double tempo_daq=100; //intervallo di tempo dell'acquisizione dati
     //
@@ -85,8 +85,9 @@ void LAB_nucl_efficienza(){
     //Riempimento errori su HV
     for(vector<double>::const_iterator it= HV.begin(); it!= HV.end(); it++){
         double x= *it;
-        double err= x/100 + 5; //(errore dell'1% + 5 V da manuale)
+        double err= x/100; //(errore dell'1% + 5 V da manuale)
         err_HV.push_back(err);
+       
     }
     //
     //riempimento errori su coin_doppie
@@ -138,6 +139,7 @@ void LAB_nucl_efficienza(){
         double err_rel_rate= pow(err_rel_rate_quad, 0.5);
         double err_ass_rate= err_rel_rate* R_singole[i];
         err_R_singole.push_back(err_ass_rate);
+        
     }
     //
     //++++++++++++++++++++++++++++++++++++++
@@ -172,7 +174,10 @@ void LAB_nucl_efficienza(){
     gr1->GetXaxis()->SetTitle("HV (V)");
     gr1->GetYaxis()->SetTitle("\epsilon");
     gr1->SetTitle("Grafico efficienza-tensione per scintillatore B");
+     gr1->SetMinimum(-1);
+     gr1->SetMarkerStyle(21);
     gr1->Draw("AP");
+   
     c1->Print("Grafico_eff_HV.png", "png");
 
 
@@ -184,9 +189,11 @@ void LAB_nucl_efficienza(){
     //GRAFICO   Rsingola-HV
     TCanvas* c2= new TCanvas("c2", "R_singola-tensione", 800, 600);
     //
-    TGraphErrors* gr2= new TGraphErrors(numero_elementi, HV.data(), R_singole.data(), err_HV.data(), err_coin_singole.data());
+    TGraphErrors* gr2= new TGraphErrors(numero_elementi, HV.data(), R_singole.data(), err_HV.data(), err_R_singole.data());
     gr2->GetXaxis()->SetTitle("HV (V)");
     gr2->GetYaxis()->SetTitle("R_{singola}");
+    gr2->SetMinimum(-10);
+    gr2->SetMarkerStyle(21);
     gr1->SetTitle("Grafico conteggi-tensione per scintillatore B");
     c2->cd();
     gr2->Draw("AP.");
