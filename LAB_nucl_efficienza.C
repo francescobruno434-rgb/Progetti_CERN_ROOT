@@ -199,7 +199,7 @@ void LAB_nucl_efficienza(){
     gr2->GetYaxis()->SetTitle("R_{singola}");
     gr2->SetMinimum(-10);
     gr2->SetMarkerStyle(21);
-    gr1->SetTitle("Grafico conteggi-tensione per scintillatore B");
+    gr2->SetTitle("Grafico conteggi-tensione per scintillatore B");
     c2->cd();
     gr2->Draw("AP.");
     c2->Print("Grafico_R_singola_HV.png", "png");
