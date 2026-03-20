@@ -182,7 +182,8 @@ void LAB_nucl_efficienza(){
     gr1->Draw("AP");
    
     c1->Print("Grafico_eff_HV.png", "png");
-
+    cout<<"il p value di Hv-efficienza è"<<endl;
+    double p= fit_eff->GetProb();
 
 
 
