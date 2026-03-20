@@ -176,6 +176,9 @@ void LAB_nucl_efficienza(){
     gr1->SetTitle("Grafico efficienza-tensione per scintillatore B");
      gr1->SetMinimum(-1);
      gr1->SetMarkerStyle(21);
+     TF1* fit_eff= new TF1("fit_eff", EfficiencyRising, 1950, 2400, 3);
+      fit_eff->SetParameters(1, 2100, 11);
+      gr1->Fit("fit_eff", "R");
     gr1->Draw("AP");
    
     c1->Print("Grafico_eff_HV.png", "png");
