@@ -235,7 +235,8 @@ void LAB_nucl_coincidenza(){
 
     //fit function: SALITA
      TF1* fit_coin= new TF1("fit_coin", EfficiencyRising, -40, 0, 4); //
-     fit_coin->SetParameters(-13, -37, -0.7, 13);
+     //fit_coin->SetParameters(-13, -37, -0.7, 13);
+     fit_coin->SetParameters(13, -40, 3, 0);
      fit_coin->SetLineColor(7);
      cout<<"FIT SALITA (A SINISTRA)"<<endl;
      gr1->Fit("fit_coin", "R");
