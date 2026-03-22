@@ -71,6 +71,9 @@ void LAB_nucl_coeff_att(){
     //
     gr1->GetYaxis()->SetRangeUser(0, 0.6);
     gr1->GetXaxis()->SetRangeUser(-2, 4);
+    gr1->GetXaxis()->SetTitle("x (m)");
+    gr1->GetYaxis()->SetTitle("Rate (Hz)");
+    gr1->SetTitle("Attenuazione del rate vs spessore attraversato");
    
    
     //
@@ -78,6 +81,8 @@ void LAB_nucl_coeff_att(){
     TF1* fit= new TF1("fit", "[0]*exp(-[1]*x)");
     fit->SetParameters(0.6, 0.8);
     gr1->Fit("fit");
+    cout<<"Il p-value è "<<endl;
+   cout<< fit->GetProb()<<endl;
      gr1->Draw("AP.");
      //c1->Print("coeff_attenuazione.png", "png");
 
