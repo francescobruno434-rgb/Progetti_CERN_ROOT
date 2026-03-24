@@ -35,13 +35,14 @@ tree->SetBranchAddress("fTreeCascVarV0Mass", &massa);
 //bisogna capire quante Entries (righe) ci sono; 
 int n= tree->GetEntries();
 //
-
+TCanvas* c1= new TCanvas("c1", "massa csi ", 800, 600);
+c1->Divide(1,2);
 //
-TH1F* hist= new TH1F("hist", "Plot massa", 10, 1.107, 1.124); //non voglio ancora specificare il numero di bin; ci penso dopo
+TH1F* hist_normal= new TH1F("hist", "Plot massa", 2000, 1.107, 1.124); 
+//TH1F* hist_cut= new TH1F("hist", "Plot massa col cut", 50, 1.112, 1.125);
 //
-int num_dati=0; //numero di dati nel mio istogramma
-//ora ciclo
-
+hist_normal->SetDirectory(0);
+//hist_cut->SetDirectory(0);
 float massa_min=pow(10, 15);
 float massa_max=0;
 for (int i=0; i<n; i++){
@@ -53,25 +54,23 @@ for (int i=0; i<n; i++){
         massa_max= massa;
     }
    
-    hist->Fill(massa);
-    num_dati++;
+    hist_normal->Fill(massa);
+    
 
-   /* if (massa>1.114 && massa<1.118){
-        hist->Fill(massa);
-        num_dati++;
-    }*/
+   /* if (massa>1.113 && massa<1.12){
+        hist_cut->Fill(massa);*/
+    
 }
-//il numero dei bin potrebbe essere la radice dei dati?
-/*double n_bins= pow(num_dati, 0.5);
-int n_def= (int) n_bins;*/
-//
-//hist->SetBins(n_def, 1.114, 1.118);
-//
-//a questo punto, creiamo il nostro istogramma e il canvas
-TCanvas* c1= new TCanvas("c1", "massa csi ", 800, 600);
+
+
 cout<<"la massa massima è "<<massa_max<<endl;
 cout<<"la massa minima è "<<massa_min<<endl;
-hist->Draw("");
+
+hist_normal->Draw("");
+
+
+
+
 
 analisi->Close();
 
