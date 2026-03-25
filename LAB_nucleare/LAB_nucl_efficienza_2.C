@@ -204,4 +204,8 @@ void LAB_nucl_efficienza_2(){
     gr2->Draw("AP.");
     c2->Print("Grafico_R_singola_HV.png", "png");
 
+    for(int i=0; i<numero_elementi; i++){
+        cout<< "( $ "<< HV[i]<< " \\pm  "<< err_HV[i]<< " $ ) &  ( $ " << eff[i]<< " \\pm "<< err_eff[i]<< " $ ) \\\\ \\hline "<<endl;
+    }
+
 }
