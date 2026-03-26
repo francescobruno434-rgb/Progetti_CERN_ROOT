@@ -9,7 +9,7 @@ using namespace std;
 
 
 
-void LAB_nucl_TAC_12_2(){
+void LAB_nucl_TAC_12_3(){
     char skip_line[3000]; //array spazzatura vuoto, dove ficcheremo le linee da schippare
 
 
@@ -40,13 +40,17 @@ void LAB_nucl_TAC_12_2(){
         }
 
     }
-    TF1* fit= new TF1("fit", "gaus(0)+gaus(3)", 100, 280 ); //i parametri della gaussiana sono ampiezza, media e stdv (in ordine)
-    fit->SetParameters(400, 195, 5, 200, 200, 5  );
-   fit->SetParNames("A1", "mu1", "sigma 1", "A2", "mu2", "sigma 2");
+    TF1* fit= new TF1("fit", "gaus(0)+gaus(3)+gaus(6)+gaus(9)", 100, 280 ); //i parametri della gaussiana sono ampiezza, media e stdv (in ordine)
+    fit->SetParameters(400, 190, 25, 100, 200, 20, 100, 210, 20, 100);
+    fit->SetParameter(10, 220);
+    fit->SetParameter(11, 10);
+   fit->SetParNames("A1", "mu1", "sigma 1", "A2", "mu2", "sigma 2", "A3", "mu 3", "sigma 3", "A4");
+   fit->SetParName(10, "mu4");
+   fit->SetParName(11, "sigma4");
    //, "A3", "mu 3", "sigma 3"
-   //fit->SetParLimits(3, 200, 600);
+   fit->SetParLimits(3, 200, 600);
    //fit->SetParLimits(1, 180, 200);
-    hist->Rebin(4);
+    hist->Rebin(5);
     hist->Fit("fit", "R");
     cout<<"il p-value è :"<<endl;
     cout<<fit->GetProb()<<endl;
