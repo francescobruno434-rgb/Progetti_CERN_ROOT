@@ -9,14 +9,14 @@ using namespace std;
 
 
 
-void LAB_nucl_TAC_87_5(){
+void LAB_nucl_TAC_161_5(){
     char skip_line[3000]; //array spazzatura vuoto, dove ficcheremo le linee da schippare
 
 
-    TCanvas* c1= new TCanvas("c1", "TCA con 87.5 cm di distanza", 800, 600);
+    TCanvas* c1= new TCanvas("c1", "TCA con 161.5 cm di distanza", 800, 600);
     TH1D* hist= new TH1D("hist", "gabibbi", 512, 0, 512);
     //apro il file, che ora si chiama gabibbo;
-    fstream gabibbo("87_5_cent.mca", fstream::in);
+    fstream gabibbo("161_5_cent.mca", fstream::in);
     if (gabibbo.is_open()){
         cout<<"il file è correttamente aperto e gabibbo è contento"<<endl;
     }
@@ -40,11 +40,11 @@ void LAB_nucl_TAC_87_5(){
         }
 
     }
-    TF1* fit= new TF1("fit", "gaus(0)+gaus(3)", 100, 300 ); //i parametri della gaussiana sono ampiezza, media e stdv (in ordine)
-    fit->SetParameters(90, 170, 25, 100, 230, 29 );
+    TF1* fit= new TF1("fit", "gaus(0)+gaus(3)", 100, 400 ); //i parametri della gaussiana sono ampiezza, media e stdv (in ordine)
+    fit->SetParameters(140, 190, 25, 140, 240, 20 );
    fit->SetParNames("A1", "mu1", "sigma 1", "A2", "mu2", "sigma 2");
-   fit->SetParLimits(4, 190, 250);
-   fit->SetParLimits(1, 180, 200);
+   /*fit->SetParLimits(4, 190, 250);
+   fit->SetParLimits(1, 180, 200);*/
     hist->Rebin(7);
     hist->Fit("fit", "R");
     cout<<"il p-value è :"<<endl;
