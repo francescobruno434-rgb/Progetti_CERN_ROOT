@@ -13,7 +13,7 @@ void LAB_nucl_TAC_137(){
     char skip_line[3000]; //array spazzatura vuoto, dove ficcheremo le linee da schippare
 
 
-    TCanvas* c1= new TCanvas("c1", "TCA con 87.5 cm di distanza", 800, 600);
+    TCanvas* c1= new TCanvas("c1", "TCA con 137 cm di distanza", 800, 600);
     TH1D* hist= new TH1D("hist", "gabibbi", 512, 0, 512);
     //apro il file, che ora si chiama gabibbo;
     fstream gabibbo("137_cent.mca", fstream::in);
@@ -45,7 +45,7 @@ void LAB_nucl_TAC_137(){
    fit->SetParNames("A1", "mu1", "sigma 1", "A2", "mu2", "sigma 2");
    /*fit->SetParLimits(4, 190, 250);
    fit->SetParLimits(1, 180, 200);*/
-    hist->Rebin(7);
+    hist->Rebin(4);
     hist->Fit("fit", "R");
     cout<<"il p-value è :"<<endl;
     cout<<fit->GetProb()<<endl;

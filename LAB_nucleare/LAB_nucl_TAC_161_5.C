@@ -41,11 +41,13 @@ void LAB_nucl_TAC_161_5(){
 
     }
     TF1* fit= new TF1("fit", "gaus(0)+gaus(3)", 100, 400 ); //i parametri della gaussiana sono ampiezza, media e stdv (in ordine)
-    fit->SetParameters(140, 190, 25, 140, 240, 20 );
+    fit->SetParameters(90, 230, 19, 70, 280, 18 );
    fit->SetParNames("A1", "mu1", "sigma 1", "A2", "mu2", "sigma 2");
    /*fit->SetParLimits(4, 190, 250);
    fit->SetParLimits(1, 180, 200);*/
-    hist->Rebin(7);
+   fit->SetParLimits(3, 60, 80);
+   fit->SetParLimits(4, 270, 280);
+    hist->Rebin(4);
     hist->Fit("fit", "R");
     cout<<"il p-value è :"<<endl;
     cout<<fit->GetProb()<<endl;

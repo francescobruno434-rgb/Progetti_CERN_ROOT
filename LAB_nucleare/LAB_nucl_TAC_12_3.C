@@ -40,21 +40,22 @@ void LAB_nucl_TAC_12_3(){
         }
 
     }
-    TF1* fit= new TF1("fit", "gaus(0)+gaus(3)+gaus(6)+gaus(9)", 100, 280 ); //i parametri della gaussiana sono ampiezza, media e stdv (in ordine)
-    fit->SetParameters(400, 190, 25, 100, 200, 20, 100, 210, 20, 100);
-    fit->SetParameter(10, 220);
-    fit->SetParameter(11, 10);
-   fit->SetParNames("A1", "mu1", "sigma 1", "A2", "mu2", "sigma 2", "A3", "mu 3", "sigma 3", "A4");
-   fit->SetParName(10, "mu4");
-   fit->SetParName(11, "sigma4");
+    TF1* fit= new TF1("fit", "gaus(0)+gaus(3)+gaus(6)", 135, 255 ); //i parametri della gaussiana sono ampiezza, media e stdv (in ordine)
+    fit->SetParameters(410, 190, 15, 100, 195, 15, 100, 210, 10);
+   // fit->SetParameter(10, 220);
+   // fit->SetParameter(11, 10);
+   fit->SetParNames("A1", "mu1", "sigma 1", "A2", "mu2", "sigma 2", "A3", "mu 3", "sigma 3");
+  // fit->SetParName(10, "mu4");
+   //fit->SetParName(11, "sigma4");
    //, "A3", "mu 3", "sigma 3"
-   fit->SetParLimits(3, 200, 600);
-   //fit->SetParLimits(1, 180, 200);
-    hist->Rebin(5);
+  // fit->SetParLimits(1, 180, 175);
+  // fit->SetParLimits(4, 200, 210);
+  // fit->SetParLimits(7, 220, 240);
+    hist->Rebin(8);
     hist->Fit("fit", "R");
     cout<<"il p-value è :"<<endl;
     cout<<fit->GetProb()<<endl;
-    hist->Draw("");
+    hist->Draw("E");
 
     
 
