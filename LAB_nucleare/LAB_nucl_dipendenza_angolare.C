@@ -44,6 +44,7 @@ void LAB_nucl_dipendenza_angolare() {
     // 2. Definisci la funzione 
     TF1 *fit1 = new TF1("fit1", "[0]*pow(cos(x*TMath::Pi()/180), [1])+[2]", 0, 90);
     fit1->SetParameters(0.45, 2.0, 0);
+    fit1->SetParLimits(1, 2, 2.1);
     fit1->SetLineColor(kGreen);
     fit1->SetLineWidth(2);
 
