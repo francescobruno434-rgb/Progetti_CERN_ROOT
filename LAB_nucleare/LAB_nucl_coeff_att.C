@@ -79,7 +79,8 @@ void LAB_nucl_coeff_att(){
     //
     //funzione di fit
     TF1* fit= new TF1("fit", "[0]*exp(-[1]*x)");
-    fit->SetParameters(0.6, 0.8);
+    fit->SetParameters(0.45, 0.15);
+    fit->SetParLimits(1, 0.14, 0.19);
     gr1->Fit("fit");
     cout<<"Il p-value è "<<endl;
    cout<< fit->GetProb()<<endl;
