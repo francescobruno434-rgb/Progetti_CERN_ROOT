@@ -30,39 +30,60 @@ void LAB_nucl_coeff_att(){
 
     //++++++++++++++++++++++++++++++++++++++++++++++SCRIVERE NEI SEGUENTI VETTORI!!
     //vettore delle coincidenze
-    vector<double> rate= {0.31796963294187,
+    vector<double> rate= {0.4543532809, //NB: questa è quella sul tetto
+        0.31796963294187,
         0.267486303987769,
         0.212285350583223,
        
         0.217774547376768,
-        0.4543532809 //NB: questa è quella sul tetto
+        
          };
     //vettore errore sul rate
-    vector<double> err_rate={0.0210217226114178,
+    vector<double> err_rate={0.02870389453,
+        0.0210217226114178,
         0.0220484048715267,
         0.0183298550087976,
        
         0.0186546323932292,
-        0.02870389453
+        
     };
     //vettore profondità CALCOLATA DALL'ALTO! il tetto è 0 per intendersi; la misura è in m (contano solo le solette)
-    vector<double> profondità={1.39,
+    vector<double> profondità={0,
+        1.39,
         2.32,
 
 
         3.02,
         3.7,
-        0   };
+           };
     //
-    vector<double> err_profondità={0.014142135623731,
+    vector<double> err_profondità={0,
+        0.014142135623731,
         0.02,
 
 
         0.0244948974278318,
         0.0282842712474619,
-        0};
+        };
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++NON SCRIVERE PIU'!
 
+    vector<double> conteggi={301,
+        303,
+        200,
+        200,
+        201,};
+    vector<double> err_conteggi={17,
+        17,
+        14,
+        14,
+        
+        14,};
+    vector<double> tempo_daq={619,
+        866,
+        668,
+        819,
+        805,};
+    vector<double> err_tempo_daq={1, 1, 1, 1, 1};
 
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     TCanvas *c1= new TCanvas("c1", "Misura coeff attenuazione", 800, 600);
@@ -79,15 +100,19 @@ void LAB_nucl_coeff_att(){
     //
     //funzione di fit
     TF1* fit= new TF1("fit", "[0]*exp(-[1]*x)");
-    fit->SetParameters(0.45, 0.15);
-    fit->SetParLimits(1, 0.14, 0.19);
+    fit->SetParameters(0.45, 0.22);
+    //fit->SetParLimits(1, 0.14, 0.19);
     gr1->Fit("fit");
     cout<<"Il p-value è "<<endl;
    cout<< fit->GetProb()<<endl;
      gr1->Draw("AP.");
      //c1->Print("coeff_attenuazione.png", "png");
 
-
+        int len= 5;
+        for (int i=0; i<len; i++){
+            //profondità conteggi tempo daq, rate
+            cout<<"$ ( "<< profondità[i]<< " \\pm "<<err_profondità[i]<< " )  $ & $ ( "<<conteggi[i]<< " \\pm "<<err_conteggi[i]<< " )  $ & $ ( "<< tempo_daq[i]<< " \\pm " << err_tempo_daq[i]<< " )  $ & $ ( "<< rate[i]<< " \\pm " <<err_rate[i]<<  ") $ \\\\ \\hline" <<endl;
+        }
 
 
 

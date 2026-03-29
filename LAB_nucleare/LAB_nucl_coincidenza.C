@@ -156,7 +156,14 @@ void LAB_nucl_coincidenza(){
 
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++STOP NON SCRIVERE PIU'
 
+   /* vector<double> conteggi_d_b={
 
+    };
+    vector<double> conteggi_c_e={
+
+    };
+    vector<double> err_conteggi_d_b={};
+    vector<double> err_conteggi_c_e={};*/
 
 
 
@@ -178,6 +185,17 @@ void LAB_nucl_coincidenza(){
     int lunghezza= ritardo.size(); //grandezza di questi vettori
     cout<<"I tuoi vettori contengono "<< lunghezza<< "dati"<<endl;
     //
+    /*//errori su d+ b
+    for(int i=0; i<lunghezza; i++){
+        double err= pow(conteggi_d_b[i], 0.5);
+        err_conteggi_d_b.push_back(err);
+    }
+    //
+    //errori su c+e
+     for(int i=0; i<lunghezza; i++){
+        double err= pow(conteggi_c_e[i], 0.5);
+        err_conteggi_c_e.push_back(err);
+    }*/
     //errore sui conteggi
     for (int i=0; i<lunghezza; i++){
        double error_conteggi= pow(conteggi[i], 0.5);
@@ -266,6 +284,20 @@ void LAB_nucl_coincidenza(){
 
     gr1->Draw("AP.");
 
+    //scrittura codice latex
+    for(int i= 0; i<lunghezza; i++){
+        double temp= tempo_daq[i];
+        double err_temp= err_tempo_daq[i];
+        double cont= conteggi[i];
+        double err_cont= err_conteggi[i];
+        double rit= ritardo[i];
+        double err_rit= err_ritardo[i];
+        double rate= R_mis[i];
+        double err_rat= err_R_mis[i];
+        //ritardo, conteggi, tempo daq, rate
+
+        cout<< "$ ( "<<rit<< " \\pm "<< err_rit<< " )$ & $( "<< cont<< " \\pm "<<err_cont<< " )$ & $( "<<temp<< " \\pm "<<err_temp<<" )$ & $( "<<rate<< " \\pm "<< err_rat<< " )$ \\\\ \\hline"<<endl;
+    }
 
 
 }

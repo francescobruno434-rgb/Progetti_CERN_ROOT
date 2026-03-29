@@ -24,13 +24,45 @@ void LAB_nucl_dipendenza_angolare() {
         60,
         75,};
     double err_rate[6] = {
-        0.0261987721669508,
-        0.0243692464881574,
-        0.0168649945609463,
-        0.0111372534102197,
-        0.00972701755749498,
-        0.00255061990434491,};
+        0.0341811784486474,
+        0.0323546262014378,
+        0.0248500640973371,
+        0.0192820847670264,
+        0.0189839890140317,
+        0.0132063200447791,};
     double err_theta[6] = {1, 1, 1, 1, 1, 1};
+
+    double conteggi[6]={
+        301,
+        300,
+        300,
+        254,
+        105,
+        50
+    };
+    double err_conteggi[6]={
+        17.3493515728975,
+        17.3205080756888,
+        17.3205080756888,
+        15.9373774505092,
+        10.2469507659596,
+        7.07106781186548,
+    }; 
+
+    double tempo[6]={619,
+        661,
+        926,
+        1213,
+        798,
+        1001,};
+    double err_tempo[6]={
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+    };
 
     TCanvas *c1 = new TCanvas("c1", "Grafico Dipendenza Angolare", 800, 600);
     c1->SetGrid();
@@ -42,9 +74,9 @@ void LAB_nucl_dipendenza_angolare() {
    // AP = Assi, Punti
 
     // 2. Definisci la funzione 
-    TF1 *fit1 = new TF1("fit1", "[0]*pow(cos(x*TMath::Pi()/180), [1])+[2]", 0, 90);
-    fit1->SetParameters(0.45, 2.0, 0);
-    fit1->SetParLimits(1, 2, 2.1);
+    TF1 *fit1 = new TF1("fit1", "[0]*pow(cos(x*TMath::Pi()/180), [1])", 0, 90);
+    fit1->SetParameters(0.45, 2.0);
+   //fit1->SetParLimits(1, 2, 2.1);
     fit1->SetLineColor(kGreen);
     fit1->SetLineWidth(2);
 
@@ -63,4 +95,12 @@ void LAB_nucl_dipendenza_angolare() {
     cout<<fit1->GetProb()<<endl;
         cout<<"il cosendo di 90 gradi è"<<cos(180*TMath::Pi()/180)<<endl;
     //c1->Update();
+
+    for( int i=0; i<6; i++){
+        //theta, conteggi, tempo, rate
+        cout<<"$ ( "<< theta[i]<< " \\pm "<<err_theta[i]<< ") $ & $ ( "<< conteggi[i]<<" \\pm "<<err_conteggi[i]<< ") $ & $ ( "<<tempo[i]<< " \\pm "<< err_tempo[i]<< ") $ & $ ( "<< rate[i]<< " \\pm "<<err_rate[i]<< " ) $ \\\\ \\hline"<<endl;
+    }
+
+
+
 }
