@@ -208,4 +208,12 @@ void LAB_nucl_efficienza_2(){
         cout<< "( $ "<< HV[i]<< " \\pm  "<< err_HV[i]<< " $ ) &  ( $ " << eff[i]<< " \\pm "<< err_eff[i]<< " $ ) \\\\ \\hline "<<endl;
     }
 
+    cout<<"#################################################"<<endl;
+    cout<<"di seguito, HV, rate di singole, doppie e triple con relativi errori :) (GABIBBO)"<<endl;
+
+    for(int i=0; i<numero_elementi; i++){
+        cout<< "( $ "<< HV[i]<< " \\pm  "<< err_HV[i]<< " $ ) &  ( $ " << R_singole[i] << " \\pm "<< err_R_singole[i]<<  " $ ) &  ( $ "<< R_doppie[i]<< " \\pm "<<err_R_doppie[i]<<  " $ ) &  ( $ " << R_triple[i]<< " \\pm "<< err_R_triple[i]<<" $ ) \\\\ \\hline "<<endl;
+    }
+
+
 }
