@@ -83,7 +83,7 @@ TH1F* hist_V0_alambda= new TH1F("hist_V0_alambda", "plot massa anti lambda", 100
 //i seguenti sono per le masse con tagli su DCA
 TH1F* c_hist_V0= new TH1F("c_hist_V0", "Plot massa V0", 1000, min_V0, max_V0); 
 TH1F* c_hist_csi= new TH1F("c_hist_csi", "plot massa csi", 1000, min_csi, max_csi); 
-TH1F* c_hist_omega= new TH1F("c_hist_omega", "plot massa omega", 1000, min_omega, max_omega);
+TH1F* c_hist_omega= new TH1F("c_hist_omega", "plot massa omega", 1000, 1.65, 1.69);
 TH1F* c_hist_V0_lambda= new TH1F("c_hist_V0_lambda", "plot massa V0 lambda", 1000, min_lambda, max_lambda);
 TH1F* c_hist_V0_alambda= new TH1F("c_hist_V0_alambda", "plot massa anti lambda", 1000, min_lambda, max_lambda);
 //
@@ -112,7 +112,7 @@ for (int i=0; i<n; i++){
     if(min_lambda<= mass_V0_alambda && mass_V0_alambda<= max_lambda)   hist_V0_alambda->Fill(mass_V0_alambda);
     //
     //riempiamo gli istogrammi che CONSIDERANO I TAGLI EFFETTUATI
-    if (DCA_casc<=0.1 && DCA_V0<=0.05) {
+    if (DCA_casc<=0.1 && DCA_V0<=0.012) {       //0.1, 0.05 non funziona con omega
         c_hist_csi->Fill(mass_csi);
         c_hist_omega->Fill(mass_omega);
         
@@ -155,7 +155,7 @@ c_hist_csi->SetTitle("massa csi");
 c_hist_csi->Draw();
 
 c2->cd(2);
-c_hist_omega->Rebin(10);
+c_hist_omega->Rebin(30);
 c_hist_omega->SetTitle("massa omega");
 c_hist_omega->Draw();
 
