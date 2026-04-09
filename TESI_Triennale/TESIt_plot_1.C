@@ -76,14 +76,14 @@ double max_lambda= 1.124;
 //i seguenti sono per le masse senza tagli
 TH1F* hist_V0= new TH1F("hist_V0", "Plot massa V0", 2000, min_V0, max_V0); 
 TH1F* hist_csi= new TH1F("hist_csi", "plot massa csi", 1000, min_csi, max_csi); 
-TH1F* hist_omega= new TH1F("hist_omega", "plot massa omega", 2000, min_omega, max_omega);
+TH1F* hist_omega= new TH1F("hist_omega", "plot massa omega", 500, 1.65, 1.70);
 TH1F* hist_V0_lambda= new TH1F("hist_V0_lambda", "plot massa V0 lambda", 1000, min_lambda, max_lambda);
 TH1F* hist_V0_alambda= new TH1F("hist_V0_alambda", "plot massa anti lambda", 1000, min_lambda, max_lambda);
 //
 //i seguenti sono per le masse con tagli su DCA
 TH1F* c_hist_V0= new TH1F("c_hist_V0", "Plot massa V0", 1000, min_V0, max_V0); 
 TH1F* c_hist_csi= new TH1F("c_hist_csi", "plot massa csi", 1000, min_csi, max_csi); 
-TH1F* c_hist_omega= new TH1F("c_hist_omega", "plot massa omega", 1000, 1.65, 1.69);
+TH1F* c_hist_omega= new TH1F("c_hist_omega", "plot massa omega", 500, 1.65, 1.70);
 TH1F* c_hist_V0_lambda= new TH1F("c_hist_V0_lambda", "plot massa V0 lambda", 1000, min_lambda, max_lambda);
 TH1F* c_hist_V0_alambda= new TH1F("c_hist_V0_alambda", "plot massa anti lambda", 1000, min_lambda, max_lambda);
 //
@@ -155,7 +155,7 @@ c_hist_csi->SetTitle("massa csi");
 c_hist_csi->Draw();
 
 c2->cd(2);
-c_hist_omega->Rebin(30);
+//c_hist_omega->Rebin(30);
 c_hist_omega->SetTitle("massa omega");
 c_hist_omega->Draw();
 
