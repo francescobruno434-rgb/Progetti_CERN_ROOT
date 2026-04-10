@@ -60,9 +60,16 @@ void TESIt_tagli_2(){
     }
     //funzioni di fit massa csi
     TF1* fit_massa_csi= new TF1("fit_massa_csi", "gaus(0)+ pol3(3)", 1.3, 1.35);
-    fit_massa_csi->SetParameters(800, 1.321, 0.2, 20000);
-    fit_massa_csi->SetParLimits(0, 500, 1000);
-    fit_massa_csi->SetParLimits(1, 1.32, 1.33);
+    fit_massa_csi->SetParameters(350, 1.32171, 0.003, 20750, -2671, -2280, -3400);
+    /*fit_massa_csi->SetParLimits(0, 300, 350);
+    fit_massa_csi->SetParLimits(1, 1.321, 1.32171);
+    fit_massa_csi->SetParLimits(2, 0.003, 0.004);
+    fit_massa_csi->SetParLimits(3, 17290, 17300);
+    fit_massa_csi->SetParLimits(4, -2670, -2671);
+    fit_massa_csi->SetParLimits(5, -2240, -2241);
+    fit_massa_csi->SetParLimits(6, -2020, -2021);*/
+
+   
     //
     //funzioni di fit anti csi
     TF1* fit_massa_anti_csi= new TF1("fit_massa_anti_csi", "gaus(0)+ pol3(3)", 1.315, 1.33);
@@ -73,12 +80,13 @@ void TESIt_tagli_2(){
     hmass_csi->Fit("fit_massa_csi", "R");
     hmass_csi->Draw();
     hmass_csi->SetTitle("massa della csi");
+     cout<<"il p-value è: "<<fit_massa_csi->GetProb()<<endl;
 
     c1->cd(2);
     hmass_anti_csi->Fit("fit_massa_anti_csi", "R");
     hmass_anti_csi->Draw();
     hmass_anti_csi->SetTitle("massa anti csi");
-
+     cout<<"il p-value è: "<<fit_massa_anti_csi->GetProb()<<endl;
     
 
 
