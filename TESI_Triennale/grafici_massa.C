@@ -25,9 +25,15 @@ csi_gr2->FixParameter(2, 0.003);
 csi_gr2->FixParameter(3, 5);
 csi_gr2->FixParameter(4, 6);
 
+ TF1* funz_massa_csi2= new TF1("funz_massa_csi2", "gaus(0)+exp([3]- x*[4])", 1.3, 1.35);
+    funz_massa_csi2->FixParameter(0, 450);
+    funz_massa_csi2->FixParameter(1, 1.32171);
+    funz_massa_csi2->FixParameter(2, 0.003 );
+    funz_massa_csi2->FixParameter(3, 15.7);
+    funz_massa_csi2->FixParameter(4, 5.31);
 
 TCanvas* c1= new TCanvas("c1", "prova fit masse csi", 1800, 400);
-csi_gr->Draw();
+funz_massa_csi2->Draw();
 ///csi_gr2->Draw();
 
 
