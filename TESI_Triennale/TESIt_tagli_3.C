@@ -22,7 +22,7 @@ CascRadius
 V0cosPA
 */
 
-void TESIt_tagli_2(){
+void TESIt_tagli_3(){
     //
     //
     TFile* analisi= new TFile("AnalysisResults_280234.root", "READ");
@@ -37,8 +37,8 @@ void TESIt_tagli_2(){
     int charge=0;
     //
     //creiamo gli istogrammi con dentro solo le masse delle csi e delle anti-csi (antiparticelle di carica positiva)
-    TH1F* hmass_csi= new TH1F("mass_csi", "massa delle particelle \Csi^-", 300, 1.3, 1.35);
-    TH1F* hmass_anti_csi= new TH1F("mass_anti_csi", "massa delle anti particelle \Csi^+", 300, 1.3, 1.35);
+    TH1F* hmass_csi= new TH1F("mass_csi", "massa delle particelle \Csi^-", 350, 1.3, 1.35);
+    TH1F* hmass_anti_csi= new TH1F("mass_anti_csi", "massa delle anti particelle \Csi^+", 200, 1.3, 1.35);
     //
     //
     tree->SetBranchAddress("fTreeCascVarMassAsXi", &mass_csi);
@@ -85,22 +85,15 @@ void TESIt_tagli_2(){
     //
     //FUNZIONE DI FIT MASSA CSI:ESPONENZIALE+ GAUSSIANA
     //
-
-   /*TF1* fit_massa_csi2= new TF1("fit_massa_csi2", "gaus(0)+exp([3]- x*[4])+pol7(5)", 1.3, 1.35);
-    fit_massa_csi2->SetParameters(350, 1.32171, 0.003, 16, 5.31,  0,  0, 0 ,  0, 0, 0 );
+    TF1* fit_massa_csi2= new TF1("fit_massa_csi2", "gaus(0)+exp([3]- x*[4])+pol7(5)", 1.3, 1.35);
+    fit_massa_csi2->SetParameters(350, 1.32171, 0.003, 14.35, 4.88,  0,  0, 0 ,  0, 0, 0 );
     fit_massa_csi2->SetParameter(11, 0);
-    fit_massa_csi2->SetParameter(12, 0);
+       fit_massa_csi2->SetParameter(12, 0);
     fit_massa_csi2->SetParLimits(1, 1.32, 1.322);
     fit_massa_csi2->SetParLimits(0, 200, 1000);
    fit_massa_csi2->SetParLimits(2, 0, 0.05);
-   fit_massa_csi2->SetParLimits(3, 15, 16);
-   fit_massa_csi2->SetParLimits(4, 5, 6);*/
-    TF1* fit_massa_csi2= new TF1("fit_massa_csi2", "gaus(0)+pol3(3)", 1.3, 1.35);
-    fit_massa_csi2->SetParameters(250, 1.32171, 0.003, 285300,  -411500, 150000, 0);
-    fit_massa_csi2->SetParLimits(1, 1.32, 1.322);
-    fit_massa_csi2->SetParLimits(0, 150, 1000);
-   fit_massa_csi2->SetParLimits(2, 0, 0.05);
-  
+   fit_massa_csi2->SetParLimits(3, 14, 15);
+   fit_massa_csi2->SetParLimits(4, 4, 5);
 
 
 
@@ -108,7 +101,6 @@ void TESIt_tagli_2(){
 
     //disegniamo gli istogrammi
     c1->cd(1);
-    c1->SetGrid();
     //hmass_csi->Fit("fit_massa_csi", "R");
     hmass_csi->Fit("fit_massa_csi2", "R");
     hmass_csi->Draw();
@@ -131,25 +123,9 @@ void TESIt_tagli_2(){
 
 
      //funzioni di fit anti csi
-   /* TF1* fit_massa_anti_csi= new TF1("fit_massa_anti_csi", "gaus(0)+exp([3]- x*[4])+pol7(5)", 1.3, 1.35);
-    fit_massa_anti_csi->SetParameters(350, 1.32171, 0.003, 13.96, 4.46, 0, 0, 0, 0, 0, 0);
-    fit_massa_anti_csi->SetParameter(11, 0);
-    fit_massa_anti_csi->SetParameter(12, 0);
-    fit_massa_anti_csi->SetParLimits(1, 1.32, 1.322);
-    fit_massa_anti_csi->SetParLimits(0, 200, 1000);
-   fit_massa_anti_csi->SetParLimits(2, 0, 0.05);
-   fit_massa_anti_csi->SetParLimits(3, 13.5, 14.5);
-   fit_massa_anti_csi->SetParLimits(4, 4, 5);*/
-TF1* fit_massa_anti_csi= new TF1("fit_massa_anti_csi", "gaus(0)+pol3(3)", 1.3, 1.35);
-    fit_massa_anti_csi->SetParameters(150, 1.32171, 0.003, 370100, -542000,  200000, 0);
-    fit_massa_anti_csi->SetParLimits(1, 1.32, 1.322);
-    fit_massa_anti_csi->SetParLimits(0, 100, 1000);
-   fit_massa_anti_csi->SetParLimits(2, 0, 0.05);
-  
-
-
+    TF1* fit_massa_anti_csi= new TF1("fit_massa_anti_csi", "gaus(0)+ pol3(3)", 1.315, 1.33);
+    fit_massa_anti_csi->SetParameters(600, 1.321, 0.05, 4800);
     c1->cd(2);
-    c1->SetGrid();
     hmass_anti_csi->Fit("fit_massa_anti_csi", "R");
     hmass_anti_csi->Draw();
     hmass_anti_csi->SetTitle("massa anti csi");
@@ -157,8 +133,7 @@ TF1* fit_massa_anti_csi= new TF1("fit_massa_anti_csi", "gaus(0)+pol3(3)", 1.3, 1
     
 
 
-    c1->cd(0);
-    c1->Print("fit_masse.png", "png");
+
 
 
 
