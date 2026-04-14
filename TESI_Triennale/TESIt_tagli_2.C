@@ -8,12 +8,16 @@
 #include "TFile.h"
 using namespace std;
 
+
+//AGGIORNATO 14/04/2026; NON USARE IL 3!
+
 /*l'obiettivo di questo file è fare tagli sui seguenti valori:
 DCAV0toPrimaryVertex
 DCAPosToPv
 DCANegToPv
 V0radius
 V0cosPa (il più importante)
+(v0 daughters?)
 DCABAchToPv
 CascadecosPA (altro importante)
 CascDCAToPV
@@ -113,6 +117,15 @@ void TESIt_tagli_2(){
     hmass_csi->Fit("fit_massa_csi2", "R");
     hmass_csi->Draw();
      hmass_csi->SetTitle("massa della csi");
+     //
+     //queste righe restituiscono i parametri di git
+     double A1= fit_massa_csi2->GetParameter(0);
+     double mu1= fit_massa_csi2->GetParameter(1);
+     double sigma1= fit_massa_csi2->GetParameter(2);
+     double p00= fit_massa_csi2->GetParameter(3);
+     double p01= fit_massa_csi2->GetParameter(4);
+     double p02= fit_massa_csi2->GetParameter(5);
+     double p03= fit_massa_csi2->GetParameter(6);
     
     cout<<"il p-value è: "<<fit_massa_csi2->GetProb()<<endl;
     
@@ -154,11 +167,92 @@ TF1* fit_massa_anti_csi= new TF1("fit_massa_anti_csi", "gaus(0)+pol3(3)", 1.3, 1
     hmass_anti_csi->Draw();
     hmass_anti_csi->SetTitle("massa anti csi");
      cout<<"il p-value è: "<<fit_massa_anti_csi->GetProb()<<endl;
-    
+     //queste righe restituiscono i parametri di git
+     double A2= fit_massa_anti_csi->GetParameter(0);
+     double mu2= fit_massa_anti_csi->GetParameter(1);
+     double sigma2= fit_massa_anti_csi->GetParameter(2);
+     double p10= fit_massa_anti_csi->GetParameter(3);
+     double p11= fit_massa_anti_csi->GetParameter(4);
+     double p12= fit_massa_anti_csi->GetParameter(5);
+     double p13= fit_massa_anti_csi->GetParameter(6);
 
 
     c1->cd(0);
     c1->Print("fit_masse.png", "png");
+
+
+
+
+
+    /*++++++++++++++++DA QUI PARTE DEI PESI++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+    #################################################################################################################################
+    
+    ################################################################################################################################*/
+//
+///scriviamo di seguito i nomi delle variabili che ci interessano; poi farò il setbranchaddres
+float DCACascDaughters=0;
+tree->SetBranchAddress("fTreeCascVarDCACascDaughters", &DCACascDaughters);
+float DCABachToPrimVtx=0;
+tree->SetBranchAddress("fTreeCascVarDCABachToPrimVtx", &DCABachToPrimVtx);
+float DCAV0Daughters=0;
+tree->SetBranchAddress("fTreeCascVarDCAV0Daughters", &DCAV0Daughters );
+float DCAV0ToPrimVtx=0;
+tree->SetBranchAddress("fTreeCascVarDCAV0ToPrimVtx", &DCAV0ToPrimVtx);
+float DCAPosToPrimVtx=0;
+tree->SetBranchAddress("fTreeCascVarDCAPosToPrimVtx", &DCAPosToPrimVtx);
+float DCANegToPrimVtx=0;
+tree->SetBranchAddress("fTreeCascVarDCANegToPrimVtx", &DCANegToPrimVtx);
+float CascCosToPointingAngle=0;
+tree->SetBranchAddress("fTreeCascVarCascCosToPointingAngle", &CascCosToPointingAngle);
+float CascDCAtoPVxy=0;
+tree->SetBranchAddress("fTreeCascVarCascDCAtoPVxy", &CascDCAtoPVxy);
+float CascRadius=0;
+tree->SetBranchAddress("fTreeCascVarCascRadius", &CascRadius);
+float V0CosPointingAngle=0;
+tree->SetBranchAddress("fTreeCascVarV0CosPointingAngle", &V0CosPointingAngle);
+float V0Radius=0;
+tree->SetBranchAddress("fTreeCascVarV0Radius", &V0Radius);
+//
+/*sia per particelle che per antiparticelle, bisogna fare 3 istogrammi per ogni variabile: uno per la grandezza stessa uno per il fondo e 
+uno per il segnale; per comodità, iniziamo dalle antiparticelle*/
+//
+//############################################################################################
+//ISTOGRAMMI ANTIPARTICELLE
+//
+TH1F* hanti_DCACascDaughters= new TH1F("hanti_DCACascDaughters",200, 0, 0.6);
+TH1F* hanti_DCACascDaughters_fondo= new TH1F("hanti_DCACascDaughters_fondo", 200, 0, 0.6);
+TH1F* hanti_DCACascDaughters_segnale= new TH1F("hanti_DCACascDaughters_segnale", 200, 0, 0.6);
+//
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//cominciamo scrivendo le funzioni per le particelle e antiparticelle; chiaramente, hanno i parametri fissati (quelli del fit)
+//cominciamo dalle ANTIPARTICELLE
+TF1* funz_peso_anti_csi= new TF1("funz_peso_anti_csi", "gaus(0)+pol3(3)", 1.3, 1.35 );
+funz_peso_anti_csi->FixParameter(0, A2);
+funz_peso_anti_csi->FixParameter(1, mu2);
+funz_peso_anti_csi->FixParameter(2, sigma2);
+funz_peso_anti_csi->FixParameter(3, p10);
+funz_peso_anti_csi->FixParameter(4, p11);
+funz_peso_anti_csi->FixParameter(5, p12);
+funz_peso_anti_csi->FixParameter(6, p13);
 
 
 
