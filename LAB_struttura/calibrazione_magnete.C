@@ -1,4 +1,4 @@
-#include<iostream>
+ #include<iostream>
 #include "TGraphErrors.h"
 #include "TCanvas.h"
 #include<vector>
@@ -10,6 +10,7 @@ using namespace std;
 
 void calibrazione_magnete(){
     vector<double> corrente={
+        0,
         0.91,
         1.85,
         2.8,
@@ -23,6 +24,7 @@ void calibrazione_magnete(){
         9.91
     };
     vector<double> B={
+        8.7
         62.91,
         121.42,
         178.03,
@@ -38,6 +40,7 @@ void calibrazione_magnete(){
     //
     //errori
     vector<double> err_corrente={
+        0.000001,
        0.02275,
         0.04625,
         0.07,
@@ -51,6 +54,7 @@ void calibrazione_magnete(){
         0.24775,
     };
     vector<double> err_B={
+        0.54,
      3.2455,
         6.171,
         9.0015,
@@ -75,6 +79,9 @@ void calibrazione_magnete(){
 
 
     gr1->Fit("fit", "R");
+     gr1->GetXaxis()->SetTitle("corrente [A]");
+    gr1->GetYaxis()->SetTitle("B [mT]");
+     gr1->SetTitle("calibrazione magnete prima salita");
     gr1->Draw("AP.");
     c1->Print("prima_salita.png", "png");
     cout<<"il pvalue è "<< fit->GetProb() <<endl;

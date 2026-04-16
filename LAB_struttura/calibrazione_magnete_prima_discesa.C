@@ -77,9 +77,12 @@ void calibrazione_magnete_prima_discesa(){
     TF1* fit= new TF1("fit", "[0]+[1]*x", 0, 10);
 
 
-    gr1->SetMarkerStyle(20);
+   // gr1->SetMarkerStyle(20);
    gr1->Fit("fit", "R");
     gr1->SetMinimum(-10);
+    gr1->GetXaxis()->SetTitle("corrente [A]");
+    gr1->GetYaxis()->SetTitle("B [mT]");
+     gr1->SetTitle("calibrazione magnete prima discesa");
     gr1->Draw("AP.");
     c1->Print("prima_discesa.png", "png");
     cout<<"il pvalue è "<< fit->GetProb() <<endl;
