@@ -9,7 +9,7 @@
 using namespace std;
 
 
-//AGGIORNATO 14/04/2026; NON USARE IL 3!
+//AGGIORNATO 18/04/2026; NON USARE IL 3!
 
 /*l'obiettivo di questo file è fare tagli sui seguenti valori:
 DCAV0toPrimaryVertex
@@ -26,7 +26,7 @@ CascRadius
 V0cosPA
 */
 
-void TESIt_tagli_2(){
+void TESIt_tagli_4(){
     //
     //
     TFile* analisi= new TFile("AnalysisResults_280234.root", "READ");
@@ -43,6 +43,7 @@ void TESIt_tagli_2(){
     //creiamo gli istogrammi con dentro solo le masse delle csi e delle anti-csi (antiparticelle di carica positiva)
     TH1F* hmass_csi= new TH1F("mass_csi", "massa delle particelle Csi^-", 300, 1.3, 1.35);
     TH1F* hmass_anti_csi= new TH1F("mass_anti_csi", "massa delle anti particelle Csi^+", 300, 1.3, 1.35);
+    int num_bin_massa=300;
     //
     //
     tree->SetBranchAddress("fTreeCascVarMassAsXi", &mass_csi);
@@ -62,105 +63,38 @@ void TESIt_tagli_2(){
         }
 
     }
-    //funzioni di fit massa csi: GAUSSIANA+POLINOMIALE
-    /*TF1* fit_massa_csi= new TF1("fit_massa_csi", "gaus(0)+ pol3(3)", 1.3, 1.35);
-    fit_massa_csi->SetParameters(350, 1.32171, 0.003, 20750, -2671, -2280, -3400);
-    fit_massa_csi->SetParLimits(0, 300, 350);
-    fit_massa_csi->SetParLimits(1, 1.321, 1.32171);
-    fit_massa_csi->SetParLimits(2, 0.003, 0.004);
-    fit_massa_csi->SetParLimits(3, 17290, 17300);
-    fit_massa_csi->SetParLimits(4, -2670, -2671);
-    fit_massa_csi->SetParLimits(5, -2240, -2241);
-    fit_massa_csi->SetParLimits(6, -2020, -2021);*/
-    //FUNZIONE DI PROVA NUMERO 1: GAUSSIANA+ POLINOMIALE
-    /*
-    TF1* csi_gr= new TF1("csi_gr", "gaus(0)+ pol3(3)", 1.3, 1.35);
-
-    csi_gr->FixParameter(0, 350);
-    csi_gr->FixParameter(1, 1.32171);
-    csi_gr->FixParameter(2, 0.003);
-    csi_gr->FixParameter(3, 20750);
-    csi_gr->FixParameter(4, -2671);
-    csi_gr->FixParameter(5, -2280);
-    csi_gr->FixParameter(6, -3400);
-    */
     //
-    //
-    //
-    //FUNZIONE DI FIT MASSA CSI:ESPONENZIALE+ GAUSSIANA
-    //
-
-   /*TF1* fit_massa_csi2= new TF1("fit_massa_csi2", "gaus(0)+exp([3]- x*[4])+pol7(5)", 1.3, 1.35);
-    fit_massa_csi2->SetParameters(350, 1.32171, 0.003, 16, 5.31,  0,  0, 0 ,  0, 0, 0 );
-    fit_massa_csi2->SetParameter(11, 0);
-    fit_massa_csi2->SetParameter(12, 0);
-    fit_massa_csi2->SetParLimits(1, 1.32, 1.322);
-    fit_massa_csi2->SetParLimits(0, 200, 1000);
-   fit_massa_csi2->SetParLimits(2, 0, 0.05);
-   fit_massa_csi2->SetParLimits(3, 15, 16);
-   fit_massa_csi2->SetParLimits(4, 5, 6);*/
     TF1* fit_massa_csi2= new TF1("fit_massa_csi2", "gaus(0)+pol3(3)", 1.3, 1.35);
     fit_massa_csi2->SetParameters(250, 1.32171, 0.003, 285300,  -411500, 150000, 0);
     fit_massa_csi2->SetParLimits(1, 1.32, 1.322);
     fit_massa_csi2->SetParLimits(0, 150, 1000);
-   fit_massa_csi2->SetParLimits(2, 0, 0.05);
-  
-
-
-
-
-
+    fit_massa_csi2->SetParLimits(2, 0, 0.05);
+    //
     //disegniamo gli istogrammi
     c1->cd(1);
     c1->SetGrid();
     //hmass_csi->Fit("fit_massa_csi", "R");
     hmass_csi->Fit("fit_massa_csi2", "R");
     hmass_csi->Draw();
-     hmass_csi->SetTitle("massa della csi");
+    hmass_csi->SetTitle("massa della csi");
      //
      //queste righe restituiscono i parametri di fit
-     double A1= fit_massa_csi2->GetParameter(0);
-     double mu1= fit_massa_csi2->GetParameter(1);
-     double sigma1= fit_massa_csi2->GetParameter(2);
-     double p00= fit_massa_csi2->GetParameter(3);
-     double p01= fit_massa_csi2->GetParameter(4);
-     double p02= fit_massa_csi2->GetParameter(5);
-     double p03= fit_massa_csi2->GetParameter(6);
-    
+    double A1= fit_massa_csi2->GetParameter(0);
+    double mu1= fit_massa_csi2->GetParameter(1);
+    double sigma1= fit_massa_csi2->GetParameter(2);
+    double p00= fit_massa_csi2->GetParameter(3);
+    double p01= fit_massa_csi2->GetParameter(4);
+    double p02= fit_massa_csi2->GetParameter(5);
+    double p03= fit_massa_csi2->GetParameter(6);
+     //
     cout<<"il p-value è: "<<fit_massa_csi2->GetProb()<<endl;
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-     //funzioni di fit anti csi
-   /* TF1* fit_massa_anti_csi= new TF1("fit_massa_anti_csi", "gaus(0)+exp([3]- x*[4])+pol7(5)", 1.3, 1.35);
-    fit_massa_anti_csi->SetParameters(350, 1.32171, 0.003, 13.96, 4.46, 0, 0, 0, 0, 0, 0);
-    fit_massa_anti_csi->SetParameter(11, 0);
-    fit_massa_anti_csi->SetParameter(12, 0);
-    fit_massa_anti_csi->SetParLimits(1, 1.32, 1.322);
-    fit_massa_anti_csi->SetParLimits(0, 200, 1000);
-   fit_massa_anti_csi->SetParLimits(2, 0, 0.05);
-   fit_massa_anti_csi->SetParLimits(3, 13.5, 14.5);
-   fit_massa_anti_csi->SetParLimits(4, 4, 5);*/
+    //
     TF1* fit_massa_anti_csi= new TF1("fit_massa_anti_csi", "gaus(0)+pol3(3)", 1.3, 1.35);
     fit_massa_anti_csi->SetParameters(150, 1.32171, 0.003, 370100, -542000,  200000, 0);
     fit_massa_anti_csi->SetParLimits(1, 1.32, 1.322);
     fit_massa_anti_csi->SetParLimits(0, 100, 1000);
     fit_massa_anti_csi->SetParLimits(2, 0, 0.05);
-  
-
-
+    //
     c1->cd(2);
     c1->SetGrid();
     hmass_anti_csi->Fit("fit_massa_anti_csi", "R");
@@ -175,14 +109,9 @@ void TESIt_tagli_2(){
      double p11= fit_massa_anti_csi->GetParameter(4);
      double p12= fit_massa_anti_csi->GetParameter(5);
      double p13= fit_massa_anti_csi->GetParameter(6);
-
-
+    //
     c1->cd(0);
     c1->Print("fit_masse.png", "png");
-
-
-
-
 
     /*++++++++++++++++DA QUI PARTE DEI PESI++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     
@@ -297,16 +226,15 @@ hanti_V0Radius->SetLineColor(6);  // fucsia l'originale
 hanti_V0Radius_fondo->SetLineColor(2); //rosso il fondo
 hanti_V0Radius_segnale->SetLineColor(3); //verde segnale
 //
-
- 
+//
+// 
 //cominciamo scrivendo le funzioni per le particelle e antiparticelle; chiaramente, hanno i parametri fissati (quelli del fit)
 //cominciamo dalle ANTIPARTICELLE
 TF1* funz_segnale_anti_csi= new TF1("funz_segnale_anti_csi", "gaus(0)", 1.3, 1.35 );
 funz_segnale_anti_csi->FixParameter(0, A2);
 funz_segnale_anti_csi->FixParameter(1, mu2);
 funz_segnale_anti_csi->FixParameter(2, sigma2);
-
-
+//
 TF1* funz_anti_csi= new TF1("funz_anti_csi", "gaus(0)+pol3(3)", 1.3, 1.35);
 funz_anti_csi->FixParameter(0, A2);
 funz_anti_csi->FixParameter(1, mu2);
@@ -315,7 +243,7 @@ funz_anti_csi->FixParameter(0, p10);
 funz_anti_csi->FixParameter(1, p11);
 funz_anti_csi->FixParameter(2, p12);
 funz_anti_csi->FixParameter(3, p13);
-
+//
 TF1* funz_fondo_anti_csi= new TF1("funz_fondo_anti_csi", "pol3(0)", 1.3, 1.35);
 funz_fondo_anti_csi->FixParameter(0, p10);
 funz_fondo_anti_csi->FixParameter(1, p11);
@@ -328,72 +256,70 @@ double W=0; //è il weight
 double a_W=0; //è 1-W, l'anti-peso :)
 double somma=0;
 
-for(int i=0; i<len; i++){
-    tree->GetEntry(i);
-    if(charge>=0){
-        W= funz_segnale_anti_csi->Eval(mass_csi);
-        somma+= W;
-    }
-    W=0;
+for(int i=i; i<=num_bin_massa; i++){//i 300 bin della massa; andiamo dal primo all'ultimo
+    double mi= hmass_anti_csi->GetBinCenter(i); //massa invariante al centro di ogni bin del grafico originale delle masse 
+    double altezza= funz_segnale_anti_csi->Eval(mi);
+    somma+=altezza;
+    
 }
 cout<<"la somma vale "<<somma<<endl;
-for(int i=0; i<len; i++){
-    tree->GetEntry(i);
-    if(charge>=0){ //antiparticelle csi- hanno carica positiva
-       W= funz_segnale_anti_csi->Eval(mass_csi)/somma;//valore del peso
-       a_W= 1-W; //valore dell'antipeso
-       //if(1.321<mass_csi && mass_csi<1.322) cout<<W<< " "<<a_W<<endl;
-       hanti_DCACascDaughters->Fill(DCACascDaughters); //segnale
-       hanti_DCACascDaughters_fondo->Fill(DCACascDaughters, a_W);
-       hanti_DCACascDaughters_segnale->Fill(DCACascDaughters, W);
-       //
-        hanti_DCABachToPrimVtx->Fill(DCABachToPrimVtx);  // fucsia l'originale
-        hanti_DCABachToPrimVtx_fondo->Fill(DCABachToPrimVtx, a_W); //rosso il fondo
-        hanti_DCABachToPrimVtx_segnale->Fill(DCABachToPrimVtx, W);
-        //
-        hanti_DCAV0Daughters->Fill(DCAV0Daughters);  // fucsia l'originale
-        hanti_DCAV0Daughters_fondo->Fill(DCAV0Daughters, a_W);  //rosso il fondo
-        hanti_DCAV0Daughters_segnale->Fill(DCAV0Daughters, W);
-        //
-        hanti_DCAV0ToPrimVtx->Fill(DCAV0ToPrimVtx); // fucsia l'originale
-        hanti_DCAV0ToPrimVtx_fondo->Fill(DCAV0ToPrimVtx, a_W); //rosso il fondo
-        hanti_DCAV0ToPrimVtx_segnale->Fill(DCAV0ToPrimVtx, W);
-        //
-        hanti_DCAPosToPrimVtx->Fill(DCAPosToPrimVtx);  // fucsia l'originale
-        hanti_DCAPosToPrimVtx_fondo->Fill(DCAPosToPrimVtx, a_W); //rosso il fondo
-        hanti_DCAPosToPrimVtx_segnale->Fill(DCAPosToPrimVtx, W); 
-        //
-        hanti_DCANegToPrimVtx->Fill(DCANegToPrimVtx); // fucsia l'originale
-        hanti_DCANegToPrimVtx_fondo->Fill(DCANegToPrimVtx, a_W); //rosso il fondo
-        hanti_DCANegToPrimVtx_segnale->Fill(DCANegToPrimVtx, W);
-        //
-        hanti_CascCosToPointingAngle->Fill(CascCosToPointingAngle);  // fucsia l'originale
-        hanti_CascCosToPointingAngle_fondo->Fill(CascCosToPointingAngle, a_W);  //rosso il fondo
-        hanti_CascCosToPointingAngle_segnale->Fill(CascCosToPointingAngle, W);
-        //
-        hanti_CascDCAtoPVxy->Fill(CascDCAtoPVxy);  // fucsia l'originale
-        hanti_CascDCAtoPVxy_fondo->Fill(CascDCAtoPVxy, a_W); //rosso il fondo
-        hanti_CascDCAtoPVxy_segnale->Fill(CascDCAtoPVxy, W);
-        //
-        hanti_CascRadius->Fill(CascRadius); // fucsia l'originale
-        hanti_CascRadius_fondo->Fill(CascRadius, a_W);  //rosso il fondo
-        hanti_CascRadius_segnale->Fill(CascRadius, W); 
-        //
-        hanti_V0CosPointingAngle->Fill(V0CosPointingAngle); // fucsia l'originale
-        hanti_V0CosPointingAngle_fondo->Fill(V0CosPointingAngle, a_W); //rosso il fondo
-        hanti_V0CosPointingAngle_segnale->Fill(V0CosPointingAngle, W);
-        //
-        hanti_V0Radius->Fill(V0Radius);  // fucsia l'originale
-        hanti_V0Radius_fondo->Fill(V0Radius, a_W); //rosso il fondo
-        hanti_V0Radius_segnale->Fill(V0Radius, W); //verde segnale
-        
-    }
-
-
-
-
-
+for(int i=1; i<num_bin_massa; i++){
+    double mi= hmass_anti_csi->GetBinCenter(i);
+     
+    W= funz_segnale_anti_csi->Eval(mi)/somma;//valore del peso
+    a_W= 1-W; //valore dell'antipeso}
+    //if(1.321<mass_csi && mass_csi<1.322) cout<<W<< " "<<a_W<<endl;
+    hanti_DCACascDaughters->Fill(DCACascDaughters); //segnale
+    hanti_DCACascDaughters_fondo->Fill(DCACascDaughters, a_W);
+    hanti_DCACascDaughters_segnale->Fill(DCACascDaughters, W);
+    //
+    hanti_DCABachToPrimVtx->Fill(DCABachToPrimVtx);  // fucsia l'originale
+    hanti_DCABachToPrimVtx_fondo->Fill(DCABachToPrimVtx, a_W); //rosso il fondo
+    hanti_DCABachToPrimVtx_segnale->Fill(DCABachToPrimVtx, W);
+    //
+    hanti_DCAV0Daughters->Fill(DCAV0Daughters);  // fucsia l'originale
+    hanti_DCAV0Daughters_fondo->Fill(DCAV0Daughters, a_W);  //rosso il fondo
+    hanti_DCAV0Daughters_segnale->Fill(DCAV0Daughters, W);
+    //
+    hanti_DCAV0ToPrimVtx->Fill(DCAV0ToPrimVtx); // fucsia l'originale
+    hanti_DCAV0ToPrimVtx_fondo->Fill(DCAV0ToPrimVtx, a_W); //rosso il fondo
+    hanti_DCAV0ToPrimVtx_segnale->Fill(DCAV0ToPrimVtx, W);
+    //
+    hanti_DCAPosToPrimVtx->Fill(DCAPosToPrimVtx);  // fucsia l'originale
+    hanti_DCAPosToPrimVtx_fondo->Fill(DCAPosToPrimVtx, a_W); //rosso il fondo
+    hanti_DCAPosToPrimVtx_segnale->Fill(DCAPosToPrimVtx, W); 
+    //
+    hanti_DCANegToPrimVtx->Fill(DCANegToPrimVtx); // fucsia l'originale
+    hanti_DCANegToPrimVtx_fondo->Fill(DCANegToPrimVtx, a_W); //rosso il fondo
+    hanti_DCANegToPrimVtx_segnale->Fill(DCANegToPrimVtx, W);
+    //
+    hanti_CascCosToPointingAngle->Fill(CascCosToPointingAngle);  // fucsia l'originale
+    hanti_CascCosToPointingAngle_fondo->Fill(CascCosToPointingAngle, a_W);  //rosso il fondo
+    hanti_CascCosToPointingAngle_segnale->Fill(CascCosToPointingAngle, W);
+    //
+    hanti_CascDCAtoPVxy->Fill(CascDCAtoPVxy);  // fucsia l'originale
+    hanti_CascDCAtoPVxy_fondo->Fill(CascDCAtoPVxy, a_W); //rosso il fondo
+    hanti_CascDCAtoPVxy_segnale->Fill(CascDCAtoPVxy, W);
+    //
+    hanti_CascRadius->Fill(CascRadius); // fucsia l'originale
+    hanti_CascRadius_fondo->Fill(CascRadius, a_W);  //rosso il fondo
+    hanti_CascRadius_segnale->Fill(CascRadius, W); 
+    //
+    hanti_V0CosPointingAngle->Fill(V0CosPointingAngle); // fucsia l'originale
+    hanti_V0CosPointingAngle_fondo->Fill(V0CosPointingAngle, a_W); //rosso il fondo
+    hanti_V0CosPointingAngle_segnale->Fill(V0CosPointingAngle, W);
+    //
+    hanti_V0Radius->Fill(V0Radius);  // fucsia l'originale
+    hanti_V0Radius_fondo->Fill(V0Radius, a_W); //rosso il fondo
+    hanti_V0Radius_segnale->Fill(V0Radius, W); //verde segnale
+    
 }
+
+
+
+
+
+
 
 
 TCanvas* c2= new TCanvas("c2", "foglio 1 ANTI_CSI", 1000, 800);
@@ -404,11 +330,12 @@ TCanvas* c4= new TCanvas("c4", "foglio 3 ANTI_CSI", 1000, 800);
 c4->Divide(2,2);
 
 c2->cd(1);
-//hanti_DCACascDaughters->Draw();
+hanti_DCACascDaughters->Draw();
 hanti_DCACascDaughters->SetTitle("hanti_DCACascDaughters");
-hanti_DCACascDaughters_fondo->Draw(); //rosso il fondo
+hanti_DCACascDaughters_fondo->Draw("SAME"); //rosso il fondo
 hanti_DCACascDaughters_segnale->Draw("SAME");
 //
+
 c2->cd(2);
 hanti_DCABachToPrimVtx->Draw(); 
 hanti_DCABachToPrimVtx->SetTitle("hanti_DCABachToPrimVtx");
