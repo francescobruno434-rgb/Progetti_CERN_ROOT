@@ -341,7 +341,6 @@ c4->Divide(2,2);
 //
 c2->cd(1);
 hanti_DCACascDaughters->Draw();
-
 hanti_DCACascDaughters_fondo->Draw("SAME"); //rosso il fondo
 hanti_DCACascDaughters_segnale->Draw("SAME");
 hanti_DCACascDaughters->SetTitle("hanti_DCACascDaughters");
