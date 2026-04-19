@@ -139,5 +139,6 @@ void TESIt_tagli_5(){
         pesi->Fill(W); 
     }
     c100->cd();
+    c100->Print("pesi_1000bin.png", "png");
     pesi->Draw();
 }
