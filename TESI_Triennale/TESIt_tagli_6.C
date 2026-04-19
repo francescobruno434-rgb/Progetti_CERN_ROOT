@@ -41,8 +41,8 @@ void TESIt_tagli_4(){
     int charge=0;
     //"aiuto ho dimenticato il titolo",
     //creiamo gli istogrammi con dentro solo le masse delle csi e delle anti-csi (antiparticelle di carica positiva)
-    TH1F* hmass_csi= new TH1F("mass_csi", "massa delle particelle Csi^-", 300, 1.3, 1.35);
-    TH1F* hmass_anti_csi= new TH1F("mass_anti_csi", "massa delle anti particelle Csi^+", 300, 1.3, 1.35);
+    TH1F* hmass_csi= new TH1F("mass_csi", "massa delle particelle Csi^-", 3000, 1.3, 1.35);
+    TH1F* hmass_anti_csi= new TH1F("mass_anti_csi", "massa delle anti particelle Csi^+", 3000, 1.3, 1.35);
     int num_bin_massa=300;
     //
     //
@@ -111,7 +111,7 @@ void TESIt_tagli_4(){
      double p13= fit_massa_anti_csi->GetParameter(6);
     //
     c1->cd(0);
-    c1->Print("fit_masse.png", "png");
+    c1->Print("fit_masse_molto_fine.png", "png");
 
     /*++++++++++++++++DA QUI PARTE DEI PESI++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     
@@ -149,7 +149,7 @@ uno per il segnale; per comodità, iniziamo dalle antiparticelle*/
 //############################################################################################
 //ISTOGRAMMI ANTIPARTICELLE
 //
-TH1F* hanti_DCACascDaughters= new TH1F("hanti_DCACascDaughters","aiuto ho dimenticato il titolo",200, 0, 0.51);
+TH1F* hanti_DCACascDaughters= new TH1F("hanti_DCACascDaughters","aiuto ho dimenticato il titolo",2000, 0, 0.51);
 TH1F* hanti_DCACascDaughters_fondo= new TH1F("hanti_DCACascDaughters_fondo","aiuto ho dimenticato il titolo", 200, 0, 0.51);
 TH1F* hanti_DCACascDaughters_segnale= new TH1F("hanti_DCACascDaughters_segnale", "aiuto ho dimenticato il titolo",200, 0, 0.51);
 hanti_DCACascDaughters->SetLineColor(6);  // fucsia l'originale
@@ -230,14 +230,14 @@ hanti_V0Radius_segnale->SetLineColor(3); //verde segnale
 // 
 //cominciamo scrivendo le funzioni per le particelle e antiparticelle; chiaramente, hanno i parametri fissati (quelli del fit)
 //cominciamo dalle ANTIPARTICELLE
-TF1* funz_segnale_anti_csi= new TF1("funz_segnale_anti_csi", "(0.8362602442)*gaus(0)", 1.3, 1.35 );
+TF1* funz_segnale_anti_csi= new TF1("funz_segnale_anti_csi", "gaus(0)", 1.3, 1.35 );
 funz_segnale_anti_csi->FixParameter(0, A2);
 funz_segnale_anti_csi->FixParameter(1, mu2);
 funz_segnale_anti_csi->FixParameter(2, sigma2);
 //funz_segnale_anti_csi->SetNormalized(1); //la normaliziamo
 cout<<"l'integrale della gaussiana è "<< funz_segnale_anti_csi->Integral(1.3, 1.35)<<endl;
 //
-TF1* funz_anti_csi= new TF1("funz_anti_csi", "(0.8362602442)*gaus(0)+(0.0064450016)*pol3(3)", 1.3, 1.35);
+TF1* funz_anti_csi= new TF1("funz_anti_csi", "gaus(0)+pol3(3)", 1.3, 1.35);
 funz_anti_csi->FixParameter(0, A2);
 funz_anti_csi->FixParameter(1, mu2);
 funz_anti_csi->FixParameter(2, sigma2);
@@ -248,7 +248,7 @@ funz_anti_csi->FixParameter(6, p13);
 cout<<"l'integrale della funz totale è "<<funz_anti_csi->Integral(1.3, 1.35)<<endl;
 //funz_anti_csi->SetNormalized(1);
 //
-TF1* funz_fondo_anti_csi= new TF1("funz_fondo_anti_csi", "(0.0064450016)*pol3(0)", 1.3, 1.35);
+TF1* funz_fondo_anti_csi= new TF1("funz_fondo_anti_csi", "pol3(0)", 1.3, 1.35);
 funz_fondo_anti_csi->FixParameter(0, p10);
 funz_fondo_anti_csi->FixParameter(1, p11);
 funz_fondo_anti_csi->FixParameter(2, p12);
