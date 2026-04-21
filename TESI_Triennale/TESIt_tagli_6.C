@@ -229,14 +229,14 @@ hanti_V0Radius_segnale->SetLineColor(3); //verde segnale
 // 
 //cominciamo scrivendo le funzioni per le particelle e antiparticelle; chiaramente, hanno i parametri fissati (quelli del fit)
 //cominciamo dalle ANTIPARTICELLE
-TF1* funz_segnale_anti_csi= new TF1("funz_segnale_anti_csi", " (2.1054)*gaus(0)", 1.3, 1.35 );
+TF1* funz_segnale_anti_csi= new TF1("funz_segnale_anti_csi", " gaus(0)", 1.3, 1.35 );
 funz_segnale_anti_csi->FixParameter(0, A2);
 funz_segnale_anti_csi->FixParameter(1, mu2);
 funz_segnale_anti_csi->FixParameter(2, sigma2);
 //funz_segnale_anti_csi->SetNormalized(1); //la normaliziamo
 cout<<"l'integrale della gaussiana è "<< funz_segnale_anti_csi->Integral(1.3, 1.35)<<endl;
 //
-TF1* funz_anti_csi= new TF1("funz_anti_csi", "(2.1054)*gaus(0)+(0.0215)*pol3(3)", 1.3, 1.35);
+TF1* funz_anti_csi= new TF1("funz_anti_csi", "gaus(0)+pol3(3)", 1.3, 1.35);
 funz_anti_csi->FixParameter(0, A2);
 funz_anti_csi->FixParameter(1, mu2);
 funz_anti_csi->FixParameter(2, sigma2);
@@ -247,7 +247,7 @@ funz_anti_csi->FixParameter(6, p13);
 cout<<"l'integrale della funz totale è "<<funz_anti_csi->Integral(1.3, 1.35)<<endl;
 //funz_anti_csi->SetNormalized(1);
 //
-TF1* funz_fondo_anti_csi= new TF1("funz_fondo_anti_csi", "(0.0215)*pol3(0)", 1.3, 1.35);
+TF1* funz_fondo_anti_csi= new TF1("funz_fondo_anti_csi", "pol3(0)", 1.3, 1.35);
 funz_fondo_anti_csi->FixParameter(0, p10);
 funz_fondo_anti_csi->FixParameter(1, p11);
 funz_fondo_anti_csi->FixParameter(2, p12);
@@ -340,70 +340,70 @@ TCanvas* c4= new TCanvas("c4", "foglio 3 ANTI_CSI", 1000, 800);
 c4->Divide(2,2);
 //
 c2->cd(1);
-hanti_DCACascDaughters->Draw();
-hanti_DCACascDaughters_fondo->Draw("SAME"); //rosso il fondo
-hanti_DCACascDaughters_segnale->Draw("SAME");
+hanti_DCACascDaughters->DrawNormalized();
+hanti_DCACascDaughters_fondo->DrawNormalized("SAME"); //rosso il fondo
+hanti_DCACascDaughters_segnale->DrawNormalized("SAME");
 hanti_DCACascDaughters->SetTitle("hanti_DCACascDaughters");
 //
 c2->cd(2);
-hanti_DCABachToPrimVtx->Draw(); 
+hanti_DCABachToPrimVtx->DrawNormalized(); 
 hanti_DCABachToPrimVtx->SetTitle("hanti_DCABachToPrimVtx");
-hanti_DCABachToPrimVtx_fondo->Draw("SAME"); //rosso il fondo
-hanti_DCABachToPrimVtx_segnale->Draw("SAME");
+hanti_DCABachToPrimVtx_fondo->DrawNormalized("SAME"); //rosso il fondo
+hanti_DCABachToPrimVtx_segnale->DrawNormalized("SAME");
 //
 c2->cd(3);
-hanti_DCAV0Daughters->Draw(); 
+hanti_DCAV0Daughters->DrawNormalized(); 
 hanti_DCAV0Daughters->SetTitle("hanti_DCAV0Daughters");
-hanti_DCAV0Daughters_fondo->Draw("SAME");//rosso il fondo
-hanti_DCAV0Daughters_segnale->Draw("SAME");
+hanti_DCAV0Daughters_fondo->DrawNormalized("SAME");//rosso il fondo
+hanti_DCAV0Daughters_segnale->DrawNormalized("SAME");
 //
 c2->cd(4);
-hanti_DCAV0ToPrimVtx->Draw(); // fucsia l'originale
+hanti_DCAV0ToPrimVtx->DrawNormalized(); // fucsia l'originale
 hanti_DCAV0ToPrimVtx->SetTitle("hanti_DCAV0ToPrimVtx");
-hanti_DCAV0ToPrimVtx_fondo->Draw("SAME"); //rosso il fondo
-hanti_DCAV0ToPrimVtx_segnale->Draw("SAME");
+hanti_DCAV0ToPrimVtx_fondo->DrawNormalized("SAME"); //rosso il fondo
+hanti_DCAV0ToPrimVtx_segnale->DrawNormalized("SAME");
 //
 c3->cd(1);
-hanti_DCAPosToPrimVtx->Draw(); // fucsia l'originale
+hanti_DCAPosToPrimVtx->DrawNormalized(); // fucsia l'originale
 hanti_DCAPosToPrimVtx->SetTitle("hanti_DCAPosToPrimVtx");
-hanti_DCAPosToPrimVtx_fondo->Draw("SAME"); //rosso il fondo
-hanti_DCAPosToPrimVtx_segnale->Draw("SAME");
+hanti_DCAPosToPrimVtx_fondo->DrawNormalized("SAME"); //rosso il fondo
+hanti_DCAPosToPrimVtx_segnale->DrawNormalized("SAME");
 //
 c3->cd(2);
-hanti_DCANegToPrimVtx->Draw(); // fucsia l'originale
+hanti_DCANegToPrimVtx->DrawNormalized(); // fucsia l'originale
 hanti_DCANegToPrimVtx->SetTitle("hanti_DCANegToPrimVtx");
-hanti_DCANegToPrimVtx_fondo->Draw("SAME");//rosso il fondo
-hanti_DCANegToPrimVtx_segnale->Draw("SAME"); //verde segnale
+hanti_DCANegToPrimVtx_fondo->DrawNormalized("SAME");//rosso il fondo
+hanti_DCANegToPrimVtx_segnale->DrawNormalized("SAME"); //verde segnale
 //
 c3->cd(3);
-hanti_CascCosToPointingAngle->Draw(); 
+hanti_CascCosToPointingAngle->DrawNormalized(); 
 hanti_CascCosToPointingAngle->SetTitle("hanti_CascCosToPointingAngle");// fucsia l'originale
-hanti_CascCosToPointingAngle_fondo->Draw("SAME");//rosso il fondo
-hanti_CascCosToPointingAngle_segnale->Draw("SAME"); //verde segnale
+hanti_CascCosToPointingAngle_fondo->DrawNormalized("SAME");//rosso il fondo
+hanti_CascCosToPointingAngle_segnale->DrawNormalized("SAME"); //verde segnale
 //
 c3->cd(4);
-hanti_CascDCAtoPVxy->Draw();  // fucsia l'originale
+hanti_CascDCAtoPVxy->DrawNormalized();  // fucsia l'originale
 hanti_CascDCAtoPVxy->SetTitle("hanti_CascDCAtoPVxy");
-hanti_CascDCAtoPVxy_fondo->Draw("SAME");  //rosso il fondo
-hanti_CascDCAtoPVxy_segnale->Draw("SAME");  //verde segnale
+hanti_CascDCAtoPVxy_fondo->DrawNormalized("SAME");  //rosso il fondo
+hanti_CascDCAtoPVxy_segnale->DrawNormalized("SAME");  //verde segnale
 //
 c4->cd(1);
-hanti_CascRadius->Draw(); 
+hanti_CascRadius->DrawNormalized(); 
 hanti_CascRadius->SetTitle("hanti_CascRadius"); 
-hanti_CascRadius_fondo->Draw("SAME");//rosso il fondo
-hanti_CascRadius_segnale->Draw("SAME");
+hanti_CascRadius_fondo->DrawNormalized("SAME");//rosso il fondo
+hanti_CascRadius_segnale->DrawNormalized("SAME");
 //
 c4->cd(2);
-hanti_V0CosPointingAngle->Draw();// fucsia l'originale
+hanti_V0CosPointingAngle->DrawNormalized();// fucsia l'originale
 hanti_V0CosPointingAngle->SetTitle("hanti_V0CosPointingAngle");
-hanti_V0CosPointingAngle_fondo->Draw("SAME");//rosso il fondo
-hanti_V0CosPointingAngle_segnale->Draw("SAME");
+hanti_V0CosPointingAngle_fondo->DrawNormalized("SAME");//rosso il fondo
+hanti_V0CosPointingAngle_segnale->DrawNormalized("SAME");
 //
 c4->cd(3);
-hanti_V0Radius->Draw(); // fucsia l'originale
+hanti_V0Radius->DrawNormalized(); // fucsia l'originale
 hanti_V0Radius->SetTitle("hanti_V0Radius");
-hanti_V0Radius_fondo->Draw("SAME");//rosso il fondo
-hanti_V0Radius_segnale->Draw("SAME");//verde segnale
+hanti_V0Radius_fondo->DrawNormalized("SAME");//rosso il fondo
+hanti_V0Radius_segnale->DrawNormalized("SAME");//verde segnale
 //
 
 TFile* output= new TFile("grafici_parametri.root", "RECREATE");
