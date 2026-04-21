@@ -376,12 +376,20 @@ void FC_trasmittanza(){
     axis->Draw();
     gPad->Update();
     
+//p2 è la lambda 0, p3 è la delta lambda
+    TF1* fit_fc= new TF1("fit_fc", "[0]+([1]/(1+exp((x-[2])/[3])))", 680, 750);
+    fit_fc->SetLineColor(4);
+    fit_fc->SetParameters(0, 0.15, 690, 30);
+    gr2->Fit("fit_fc", "R");
+    
+    c1->Update();
 
 
-
-
-
-
+    TF1* fit_tr_1= new TF1("fit_tr_1", "[0]+([1]/(1+exp(-(x-[2])/[3])))", 680, 750 );
+     fit_tr_1->SetParameters(0, 0.15, 710, 30);
+     fit_tr_1->SetLineColor(6);
+    gr1->Fit("fit_tr_1", "R+");
+    c1->Update();
 
 
 }
