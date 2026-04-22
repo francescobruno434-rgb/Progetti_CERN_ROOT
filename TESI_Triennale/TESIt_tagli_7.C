@@ -377,14 +377,14 @@ void TESIt_tagli_7(){
     hanti_V0Radius_fondo->DrawNormalized("SAME");//rosso il fondo
     hanti_V0Radius_segnale->DrawNormalized("SAME");//verde segnale
     //
-    /*
-    TFile* output= new TFile("grafici_parametri.root", "RECREATE");
-    c1->Write();
-    c2->Write();
-    c3->Write();
-    c4->Write();
+    
+    TFile* output= new TFile("grafici_parametri.root", "UPDATE");
+    c1->Write("anti_csi foglio 1");
+    c2->Write("anti_csi foglio 2");
+    c3->Write("anti_csi foglio 3");
+    c4->Write("anti_csi foglio 4");
     output->Close();
-    */
+    
 
 
 

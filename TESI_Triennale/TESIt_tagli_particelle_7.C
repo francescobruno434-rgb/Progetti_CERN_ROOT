@@ -377,14 +377,12 @@ void TESIt_tagli_particelle_7(){
     h_V0Radius_fondo->DrawNormalized("SAME");//rosso il fondo
     h_V0Radius_segnale->DrawNormalized("SAME");//verde segnale
     //
-    /*
-    TFile* output= new TFile("grafici_parametri.root", "RECREATE");
-    c1->Write();
-    c2->Write();
-    c3->Write();
-    c4->Write();
+    TFile* output= new TFile("grafici_parametri.root", "UPDATE");
+    c1->Write("csi foglio 1");
+    c2->Write("csi foglio 2");
+    c3->Write("csi foglio 3");
+    c4->Write("csi foglio 4");
     output->Close();
-    */
 
 
 

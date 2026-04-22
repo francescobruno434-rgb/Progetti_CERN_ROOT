@@ -145,20 +145,56 @@ void distr_pesi(){
     funz_fondo_anti_csi->FixParameter(2, p12);
     funz_fondo_anti_csi->FixParameter(3, p13);
     //
+    //di seguito le particelle
+    //
+     TF1* funz_segnale_csi= new TF1("funz_segnale_csi", "gaus(0)", 1.3, 1.35 );
+    funz_segnale_anti_csi->FixParameter(0, A1);
+    funz_segnale_anti_csi->FixParameter(1, mu1);
+    funz_segnale_anti_csi->FixParameter(2, sigma1);
+    //
+    TF1* funz_csi= new TF1("funz_csi", "gaus(0)+pol3(3)", 1.3, 1.35);
+    funz_anti_csi->FixParameter(0, A1);
+    funz_anti_csi->FixParameter(1, mu1);
+    funz_anti_csi->FixParameter(2, sigma1);
+    funz_anti_csi->FixParameter(3, p00);
+    funz_anti_csi->FixParameter(4, p01);
+    funz_anti_csi->FixParameter(5, p02);
+    funz_anti_csi->FixParameter(6, p03);
+    //
+    TF1* funz_fondo_csi= new TF1("funz_fondo_csi", "pol3(0)", 1.3, 1.35);
+    funz_fondo_anti_csi->FixParameter(0, p00);
+    funz_fondo_anti_csi->FixParameter(1, p01);
+    funz_fondo_anti_csi->FixParameter(2, p02);
+    funz_fondo_anti_csi->FixParameter(3, p03);
     //
     double W=0; //è il weight
     double a_W=0; //è 1-W, l'anti-peso
 
-    TH1D* pesi= new TH1D("pesi", "pesi", 70, 0, 0.07);
-    TCanvas* c100= new TCanvas("c100", "pesi", 800, 600);
+    TH1D* pesi_hanti_csi= new TH1D("pesi_hanti_csi", "pesi #Csi^+", 70, 0, 0.07);
+     TH1D* pesi_csi= new TH1D("pesi_csi", "pesi #Csi^-", 70, 0, 0.07);
+    TCanvas* c100= new TCanvas("c100", "pesi", 1000, 800);
+    c100->Divide(1, 2);
     for (int i=1; i<1000; i++){
         float mi= hmass_anti_csi->GetBinCenter(i);
         double a=funz_segnale_anti_csi->Eval(mi);
         double b= funz_anti_csi->Eval(mi);
         W= a/b;
-        pesi->Fill(W); 
+        pesi_hanti_csi->Fill(W); 
+        float mi_csi= hmass_csi->GetBinCenter(i);
+        double a2=funz_segnale_csi->Eval(mi_csi);
+        double b2= funz_csi->Eval(mi_csi);
+        W= a/b;
+        pesi_csi->Fill(W); 
     }
-    c100->cd();
-    c100->Print("pesi_1000bin.png", "png");
-    pesi->Draw();
+    c100->cd(1);
+    //c100->Print("pesi_1000bin.png", "png");
+    pesi_hanti_csi->Draw();
+
+    c100->cd(2);
+    pesi_csi->Draw();
+
+    TFile* file= new TFile("grafici_parametri.root", "UPDATE");
+    c100->Write("distribuzione pesi");
+    cout<<"esecuzione finita"<<endl;
+    file->Close();
 }
