@@ -392,6 +392,7 @@ void FC_trasmittanza(){
     fit_fc->SetLineColor(4);
     fit_fc->SetParameters(0, 0.15, 620, 30);
     gr2->Fit("fit_fc", "R");
+    cout<<"p value fotocorrente "<<fit_fc->GetProb()<<endl;
     
     c1->Update();
 
@@ -401,6 +402,7 @@ void FC_trasmittanza(){
      //fit_tr_1->SetParLimits(2, 630, 680);
      fit_tr_1->SetLineColor(9);
     gr1->Fit("fit_tr_1", "R+");
+    cout<<"p value trasmittanza "<<fit_tr_1->GetProb()<<endl;
     
 
     c1->Update();
