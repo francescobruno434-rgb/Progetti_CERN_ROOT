@@ -10,7 +10,7 @@
 using namespace std;
 
 
-void FC_graph_I0(){
+void FC_grafico_I0(){
     vector<double> lambda={
         437.3694,
         447.737,
@@ -221,8 +221,8 @@ void FC_graph_I0(){
 
     p1->Draw();
     p1->cd();
-    gr1->SetTitle("Tensione e lambda senza vetrino");
-    gr1->GetYaxis()->SetTitle("Tensione");
+    gr1->SetTitle("#I_0 vs #lambda senza vetrino");
+    gr1->GetYaxis()->SetTitle("Tensione (mV)");
     gr1->GetYaxis()->SetAxisColor(kBlack);
     gr1->GetYaxis()->SetLabelColor(kBlack);
     gr1->GetYaxis()->SetTitleColor(kBlack);
