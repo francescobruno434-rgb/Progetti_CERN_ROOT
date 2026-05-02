@@ -65,7 +65,7 @@ void TESIt_tagli_particelle_vero(){
     TH1F* hmass_Pt7= new TH1F("hmass_Pt7", "Pt7", 30,  1.315, 1.326 );
     TH1F* hmass_Pt8= new TH1F("hmass_Pt8", "Pt8", 30,  1.316, 1.323 );
     TH1F* hmass_Pt9= new TH1F("hmass_Pt9", "Pt9", 30,  1.322, 1.328 );
-    TH1F* hmass_Pt10= new TH1F("hmass_P105", "Pt10", 60,  1.319, 1.328 );
+    TH1F* hmass_Pt10= new TH1F("hmass_P10", "Pt10", 60,  1.319, 1.328 );
     int num_bin_massa=1000;
     //
     //numero di entries
@@ -236,8 +236,9 @@ void TESIt_tagli_particelle_vero(){
     c13->cd(2);
     hmass_Pt10->Draw();
 
-
-
+    c11->Print("spettro_masse_Pt1.png", "png");
+    c12->Print("spettro_masse_Pt2.png", "png");
+    c13->Print("spettro_masse_Pt3.png", "png");
 
 
 

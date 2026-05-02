@@ -237,6 +237,10 @@ void TESIt_tagli_antiparticelle_vero(){
     c13->cd(2);
     hmass_Pt10->Draw();
 
+    c1->Print("spettro_massa_con_tagli_veri.png", "png");
+    c11->Print("spettro_antimass_Pt1.png", "png");
+    c12->Print("spettro_antimass_Pt2.png", "png");
+    c13->Print("spettro_antimass_Pt3.png", "png");
 
 
 
