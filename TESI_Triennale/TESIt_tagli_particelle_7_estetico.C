@@ -161,65 +161,65 @@ void TESIt_tagli_particelle_7_estetico(){
     h_DCABachToPrimVtx_fondo->SetLineColor(2); //rosso il fondo
     h_DCABachToPrimVtx_segnale->SetLineColor(3); //verde segnale
     //
-    TH1F* h_DCAV0Daughters= new TH1F("h_DCAV0Daughters","h_DCAV0Daughters",200, 0, 0.3);
-    TH1F* h_DCAV0Daughters_fondo= new TH1F("h_DCAV0Daughters_fondo","h_DCAV0Daughters", 200, 0, 0.3);
-    TH1F* h_DCAV0Daughters_segnale= new TH1F("h_DCAV0Daughters_segnale", "h_DCAV0Daughters",200, 0, 0.3);
+    TH1F* h_DCAV0Daughters= new TH1F("h_DCAV0Daughters","h_DCAV0Daughters",200, 0, 0.05);
+    TH1F* h_DCAV0Daughters_fondo= new TH1F("h_DCAV0Daughters_fondo","h_DCAV0Daughters", 200, 0, 0.05);
+    TH1F* h_DCAV0Daughters_segnale= new TH1F("h_DCAV0Daughters_segnale", "h_DCAV0Daughters",200, 0, 0.05);
     h_DCAV0Daughters->SetLineColor(4);  // fucsia l'originale
     h_DCAV0Daughters_fondo->SetLineColor(2); //rosso il fondo
     h_DCAV0Daughters_segnale->SetLineColor(3); //verde segnale
     //
-    TH1F* h_DCAV0ToPrimVtx= new TH1F("h_DCAV0ToPrimVtx","h_DCAV0ToPrimVtx",200, 0, 25);
-    TH1F* h_DCAV0ToPrimVtx_fondo= new TH1F("h_DCAV0ToPrimVtx_fondo","h_DCAV0ToPrimVtx", 200, 0, 25);
-    TH1F* h_DCAV0ToPrimVtx_segnale= new TH1F("h_DCAV0ToPrimVtx_segnale","h_DCAV0ToPrimVtx", 200, 0, 25);
+    TH1F* h_DCAV0ToPrimVtx= new TH1F("h_DCAV0ToPrimVtx","h_DCAV0ToPrimVtx",200, 0, 2);
+    TH1F* h_DCAV0ToPrimVtx_fondo= new TH1F("h_DCAV0ToPrimVtx_fondo","h_DCAV0ToPrimVtx", 200, 0, 2);
+    TH1F* h_DCAV0ToPrimVtx_segnale= new TH1F("h_DCAV0ToPrimVtx_segnale","h_DCAV0ToPrimVtx", 200, 0, 2);
     h_DCAV0ToPrimVtx->SetLineColor(4);  // fucsia l'originale
     h_DCAV0ToPrimVtx_fondo->SetLineColor(2); //rosso il fondo
     h_DCAV0ToPrimVtx_segnale->SetLineColor(3); //verde segnale
     //
-    TH1F* h_DCAPosToPrimVtx= new TH1F("h_DCAPosToPrimVtx","h_DCAPosToPrimVtx",200, 0, 38);
-    TH1F* h_DCAPosToPrimVtx_fondo= new TH1F("h_DCAPosToPrimVtx_fondo","h_DCAPosToPrimVtx", 200, 0, 38);
-    TH1F* h_DCAPosToPrimVtx_segnale= new TH1F("h_DCAPosToPrimVtx_segnale","h_DCAPosToPrimVtx", 200, 0, 38);
+    TH1F* h_DCAPosToPrimVtx= new TH1F("h_DCAPosToPrimVtx","h_DCAPosToPrimVtx",200, 0, 3);
+    TH1F* h_DCAPosToPrimVtx_fondo= new TH1F("h_DCAPosToPrimVtx_fondo","h_DCAPosToPrimVtx", 200, 0, 3);
+    TH1F* h_DCAPosToPrimVtx_segnale= new TH1F("h_DCAPosToPrimVtx_segnale","h_DCAPosToPrimVtx", 200, 0, 3);
     h_DCAPosToPrimVtx->SetLineColor(4);  // fucsia l'originale
     h_DCAPosToPrimVtx_fondo->SetLineColor(2); //rosso il fondo
     h_DCAPosToPrimVtx_segnale->SetLineColor(3); //verde segnale
     //
-    TH1F* h_DCANegToPrimVtx= new TH1F("h_DCANegToPrimVtx","h_DCANegToPrimVtx",200, 0, 38);
-    TH1F* h_DCANegToPrimVtx_fondo= new TH1F("h_DCANegToPrimVtx_fondo","h_DCANegToPrimVtx", 200, 0, 38);
-    TH1F* h_DCANegToPrimVtx_segnale= new TH1F("h_DCANegToPrimVtx_segnale","h_DCANegToPrimVtx", 200, 0, 38);
+    TH1F* h_DCANegToPrimVtx= new TH1F("h_DCANegToPrimVtx","h_DCANegToPrimVtx",200, 0, 3);
+    TH1F* h_DCANegToPrimVtx_fondo= new TH1F("h_DCANegToPrimVtx_fondo","h_DCANegToPrimVtx", 200, 0, 3);
+    TH1F* h_DCANegToPrimVtx_segnale= new TH1F("h_DCANegToPrimVtx_segnale","h_DCANegToPrimVtx", 200, 0, 3);
     h_DCANegToPrimVtx->SetLineColor(4);  // fucsia l'originale
     h_DCANegToPrimVtx_fondo->SetLineColor(2); //rosso il fondo
     h_DCANegToPrimVtx_segnale->SetLineColor(3); //verde segnale
     //
-    TH1F* h_CascCosToPointingAngle= new TH1F("h_CascCosToPointingAngle","h_CascCosToPointingAngle",200, 0.98, 1.002);
-    TH1F* h_CascCosToPointingAngle_fondo= new TH1F("h_CascCosToPointingAngle_fondo","h_CascCosToPointingAngle", 200, 0.98, 1.002);
-    TH1F* h_CascCosToPointingAngle_segnale= new TH1F("h_CascCosToPointingAngle_segnale","h_CascCosToPointingAngle", 200, 0.98, 1.002);
+    TH1F* h_CascCosToPointingAngle= new TH1F("h_CascCosToPointingAngle","h_CascCosToPointingAngle",200, 0.99, 1.002);
+    TH1F* h_CascCosToPointingAngle_fondo= new TH1F("h_CascCosToPointingAngle_fondo","h_CascCosToPointingAngle", 200, 0.99, 1.002);
+    TH1F* h_CascCosToPointingAngle_segnale= new TH1F("h_CascCosToPointingAngle_segnale","h_CascCosToPointingAngle", 200, 0.99, 1.002);
     h_CascCosToPointingAngle->SetLineColor(4);  // fucsia l'originale
     h_CascCosToPointingAngle_fondo->SetLineColor(2); //rosso il fondo
     h_CascCosToPointingAngle_segnale->SetLineColor(3); //verde segnale
     //
-    TH1F* h_CascDCAtoPVxy= new TH1F("h_CascDCAtoPVxy","h_CascDCAtoPVxy",200, 0, 11);
-    TH1F* h_CascDCAtoPVxy_fondo= new TH1F("h_CascDCAtoPVxy_fondo","h_CascDCAtoPVxy", 200, 0, 11);
-    TH1F* h_CascDCAtoPVxy_segnale= new TH1F("h_CascDCAtoPVxy_segnale","h_CascDCAtoPVxy", 200, 0, 11);
+    TH1F* h_CascDCAtoPVxy= new TH1F("h_CascDCAtoPVxy","h_CascDCAtoPVxy",200, 0, 1);
+    TH1F* h_CascDCAtoPVxy_fondo= new TH1F("h_CascDCAtoPVxy_fondo","h_CascDCAtoPVxy", 200, 0, 1);
+    TH1F* h_CascDCAtoPVxy_segnale= new TH1F("h_CascDCAtoPVxy_segnale","h_CascDCAtoPVxy", 200, 0, 1);
     h_CascDCAtoPVxy->SetLineColor(4);  // fucsia l'originale
     h_CascDCAtoPVxy_fondo->SetLineColor(2); //rosso il fondo
     h_CascDCAtoPVxy_segnale->SetLineColor(3); //verde segnale
     //
-    TH1F* h_CascRadius= new TH1F("h_CascRadius","h_CascRadius",200, 0, 95);
-    TH1F* h_CascRadius_fondo= new TH1F("h_CascRadius_fondo","h_CascRadius", 200, 0, 95);
-    TH1F* h_CascRadius_segnale= new TH1F("h_CascRadius_segnale","h_CascRadius", 200, 0, 95);
+    TH1F* h_CascRadius= new TH1F("h_CascRadius","h_CascRadius",200, 0, 20);
+    TH1F* h_CascRadius_fondo= new TH1F("h_CascRadius_fondo","h_CascRadius", 200, 0, 20);
+    TH1F* h_CascRadius_segnale= new TH1F("h_CascRadius_segnale","h_CascRadius", 200, 0, 20);
     h_CascRadius->SetLineColor(4);  // fucsia l'originale
     h_CascRadius_fondo->SetLineColor(2); //rosso il fondo
     h_CascRadius_segnale->SetLineColor(3); //verde segnale
     //
-    TH1F* h_V0CosPointingAngle= new TH1F("h_V0CosPointingAngle","h_V0CosPointingAngle",200, 0.99, 1.001);
-    TH1F* h_V0CosPointingAngle_fondo= new TH1F("h_V0CosPointingAngle_fondo", "h_V0CosPointingAngle",200, 0.99,1.001);
-    TH1F* h_V0CosPointingAngle_segnale= new TH1F("h_V0CosPointingAngle_segnale","h_V0CosPointingAngle", 200, 0.99, 1.001);
+    TH1F* h_V0CosPointingAngle= new TH1F("h_V0CosPointingAngle","h_V0CosPointingAngle",200, 0.995, 1.001);
+    TH1F* h_V0CosPointingAngle_fondo= new TH1F("h_V0CosPointingAngle_fondo", "h_V0CosPointingAngle",200, 0.995,1.001);
+    TH1F* h_V0CosPointingAngle_segnale= new TH1F("h_V0CosPointingAngle_segnale","h_V0CosPointingAngle", 200, 0.995, 1.001);
     h_V0CosPointingAngle->SetLineColor(4);  // fucsia l'originale
     h_V0CosPointingAngle_fondo->SetLineColor(2); //rosso il fondo
     h_V0CosPointingAngle_segnale->SetLineColor(3); //verde segnale
     //
-    TH1F* h_V0Radius= new TH1F("h_V0Radius","h_V0Radius",200, 0, 200);
-    TH1F* h_V0Radius_fondo= new TH1F("h_V0Radius_fondo", "h_V0Radius",200, 0, 200);
-    TH1F* h_V0Radius_segnale= new TH1F("h_V0Radius_segnale","h_V0Radius", 200, 0, 200);
+    TH1F* h_V0Radius= new TH1F("h_V0Radius","h_V0Radius",200, 0, 60);
+    TH1F* h_V0Radius_fondo= new TH1F("h_V0Radius_fondo", "h_V0Radius",200, 0, 60);
+    TH1F* h_V0Radius_segnale= new TH1F("h_V0Radius_segnale","h_V0Radius", 200, 0, 60);
     h_V0Radius->SetLineColor(4);  // fucsia l'originale
     h_V0Radius_fondo->SetLineColor(2); //rosso il fondo
     h_V0Radius_segnale->SetLineColor(3); //verde segnale

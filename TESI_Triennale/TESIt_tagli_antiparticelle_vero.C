@@ -75,11 +75,11 @@ void TESIt_tagli_antiparticelle_vero(){
     for(int i=0; i<len; i++){
         tree->GetEntry(i);
         //&& CascCosToPointingAngle>0.98 && V0CosPointingAngle>0.99 && DCAV0Daughters<0.3 && DCABachToPrimVtx<5
-        if(charge<=0 && DCACascDaughters<0.1 && DCABachToPrimVtx >0.1 &&  DCAV0Daughters<0.01 && DCAV0ToPrimVtx<1 && DCAPosToPrimVtx <1 && DCANegToPrimVtx <1 && CascCosToPointingAngle > 0.999 && CascDCAtoPVxy <0.2 && CascRadius <10 && V0CosPointingAngle>0.999 &&  V0Radius <20){
+        if(charge<=0 && DCACascDaughters<0.1  &&  DCAV0Daughters<0.2 && DCAV0ToPrimVtx<1 && DCAPosToPrimVtx <1 && DCANegToPrimVtx <1 && CascCosToPointingAngle > 0.97 && CascDCAtoPVxy <0.2 && CascRadius <10 && V0CosPointingAngle>0.99 &&  V0Radius <20){
             hmass_csi->Fill(mass_csi);
            
         }
-        if(charge>0 && DCACascDaughters<0.1 && DCABachToPrimVtx >0.1 &&  DCAV0Daughters<0.01 && DCAV0ToPrimVtx<1 && DCAPosToPrimVtx <1 && DCANegToPrimVtx <1 && CascCosToPointingAngle > 0.999 && CascDCAtoPVxy <0.2 && CascRadius <10 && V0CosPointingAngle>0.999 &&  V0Radius <20 ){
+        if(charge>0 && DCACascDaughters<0.1  &&  DCAV0Daughters<0.2 && DCAV0ToPrimVtx<1 && DCAPosToPrimVtx <1 && DCANegToPrimVtx <1 && CascCosToPointingAngle > 0.97 && CascDCAtoPVxy <0.2 && CascRadius <10 && V0CosPointingAngle>0.99 &&  V0Radius <20 ){
             hmass_anti_csi->Fill(mass_csi );
              Pt->Fill(CascVarPt);
             int num_bin=Pt->FindBin(CascVarPt); //ottengo il numero del bin da mettere poi per lo spettro di massa invariante
@@ -241,6 +241,35 @@ void TESIt_tagli_antiparticelle_vero(){
     c11->Print("spettro_antimass_Pt1.png", "png");
     c12->Print("spettro_antimass_Pt2.png", "png");
     c13->Print("spettro_antimass_Pt3.png", "png");
+
+
+    //###PARTE NUOVA (6 MAGGIO 2026) ###################################################
+    //Per ogni fit di Pt, prendiamo i parametri della Gaussiana su cui vogliamo integrale
+
+    double A_Pt1= funz_Pt1->GetParameter(0);
+    double mu_Pt1=funz_Pt1->GetParameter(1);
+    double sigma_Pt1= funz_Pt1->GetParameter(2);
+    //
+     double A_Pt2= funz_Pt2->GetParameter(0);
+    double mu_Pt2=funz_Pt2->GetParameter(1);
+    double sigma_Pt2= funz_Pt2->GetParameter(2);
+    //
+     double A_Pt3= funz_Pt3->GetParameter(0);
+    double mu_Pt3=funz_Pt3->GetParameter(1);
+    double sigma_Pt3= funz_Pt3->GetParameter(2);
+    //
+     double A_Pt4= funz_Pt4->GetParameter(0);
+    double mu_Pt4=funz_Pt4->GetParameter(1);
+    double sigma_Pt4= funz_Pt4->GetParameter(2);
+    //
+     double A_Pt5= funz_Pt5->GetParameter(0);
+    double mu_Pt5=funz_Pt5->GetParameter(1);
+    double sigma_Pt5= funz_Pt5->GetParameter(2);
+//
+     double A_Pt6= funz_Pt6->GetParameter(0);
+    double mu_Pt6=funz_Pt6->GetParameter(1);
+    double sigma_Pt6= funz_Pt6->GetParameter(2);
+//
 
 
 
