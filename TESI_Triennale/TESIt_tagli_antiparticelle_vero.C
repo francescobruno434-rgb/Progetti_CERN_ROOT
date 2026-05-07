@@ -303,6 +303,24 @@ gaus_Pt6->FixParameter(2, sigma_Pt6);
 //
 //
 //calcolliamo i risultati dei vari integrali, da dividere per 0.5 vale a dire l'ampiezza dei bin di Pt; SE IL VALORE CAMBIA E' DA MODIFICARE MANUALMENTE!!!!!!!!!!
+double integrale_Pt1= gaus_Pt1->Integral(-10e4, 10e4)/0.5;
+double integrale_Pt2= gaus_Pt2->Integral(-10e4, 10e4)/0.5;
+double integrale_Pt3= gaus_Pt3->Integral(-10e4, 10e4)/0.5;
+double integrale_Pt4= gaus_Pt4->Integral(-10e4, 10e4)/0.5;
+double integrale_Pt5= gaus_Pt5->Integral(-10e4, 10e4)/0.5;
+double integrale_Pt6= gaus_Pt6->Integral(-10e4, 10e4)/0.5;
+//
+//GRAFICO SPETTRO IN PT per convenzione si associa come valore quello centrale di ogni bin.
+//ATTENTO! MODIFICA SE NECESSARIO IL NUMERO DI DATI DA INSERIRE 
+vector<double> Pt_x= {0.25, 0.75, 1.25, 1.75, 2.25, 2.75};
+vector<double> Pt_y={integrale_Pt1, integrale_Pt2, integrale_Pt3, integrale_Pt4, integrale_Pt5, integrale_Pt6};
+int size= Pt_x.size();
+TGraphErrors* spettro_Pt= new TGraphErrors(size, Pt_x.data(), Pt_y.data(), nullptr, nullptr );
+
+TCanvas* c21= new TCanvas("c21", "spettro in Pt", 800, 600);
+c21->cd();
+spettro_Pt->Draw();
+
 
 
 
