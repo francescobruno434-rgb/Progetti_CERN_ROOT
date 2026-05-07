@@ -150,8 +150,8 @@ void TESIt_tagli_antiparticelle_vero(){
     //
     c1->cd(0);
     c1->Print("fit_masse_molto_fine_tagli.png", "png");
-    
-
+    //
+    //GRAFICO MOMENTO TRASVERSO
     TCanvas* c2= new TCanvas("c2", "grafico momento trasverso", 1000, 800);
     c2->cd();
     Pt->Draw();
@@ -270,7 +270,39 @@ void TESIt_tagli_antiparticelle_vero(){
     double mu_Pt6=funz_Pt6->GetParameter(1);
     double sigma_Pt6= funz_Pt6->GetParameter(2);
 //
-
+//scriviamo le varie funzioni gaussiane per i segnali dei vari Pt
+TF1* gaus_Pt1= new TF1("gaus_Pt1", "gaus(0)", -10e4, 10e4);
+gaus_Pt1->FixParameter(0, A_Pt1);
+gaus_Pt1->FixParameter(1, mu_Pt1);
+gaus_Pt1->FixParameter(2, sigma_Pt1);
+//
+TF1* gaus_Pt2= new TF1("gaus_Pt2", "gaus(0)", -10e4, 10e4);
+gaus_Pt2->FixParameter(0, A_Pt2);
+gaus_Pt2->FixParameter(1, mu_Pt2);
+gaus_Pt2->FixParameter(2, sigma_Pt2);
+//
+TF1* gaus_Pt3= new TF1("gaus_Pt3", "gaus(0)", -10e4, 10e4);
+gaus_Pt3->FixParameter(0, A_Pt3);
+gaus_Pt3->FixParameter(1, mu_Pt3);
+gaus_Pt3->FixParameter(2, sigma_Pt3);
+//
+TF1* gaus_Pt4= new TF1("gaus_Pt4", "gaus(0)", -10e4, 10e4);
+gaus_Pt4->FixParameter(0, A_Pt4);
+gaus_Pt4->FixParameter(1, mu_Pt4);
+gaus_Pt4->FixParameter(2, sigma_Pt4);
+//
+TF1* gaus_Pt5= new TF1("gaus_Pt5", "gaus(0)", -10e4, 10e4);
+gaus_Pt5->FixParameter(0, A_Pt5);
+gaus_Pt5->FixParameter(1, mu_Pt5);
+gaus_Pt5->FixParameter(2, sigma_Pt5);
+//
+TF1* gaus_Pt6= new TF1("gaus_Pt6", "gaus(0)", -10e4, 10e4);
+gaus_Pt6->FixParameter(0, A_Pt6);
+gaus_Pt6->FixParameter(1, mu_Pt6);
+gaus_Pt6->FixParameter(2, sigma_Pt6);
+//
+//
+//calcolliamo i risultati dei vari integrali, da dividere per 0.5 vale a dire l'ampiezza dei bin di Pt; SE IL VALORE CAMBIA E' DA MODIFICARE MANUALMENTE!!!!!!!!!!
 
 
 
