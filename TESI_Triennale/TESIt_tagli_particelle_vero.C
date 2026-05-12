@@ -234,12 +234,92 @@ void TESIt_tagli_particelle_vero(){
     //
    
     c13->cd(2);
-    hmass_Pt10->Draw();
+    hmass_Pt10->Draw("AP.");
 
     c11->Print("spettro_masse_Pt1.png", "png");
     c12->Print("spettro_masse_Pt2.png", "png");
     c13->Print("spettro_masse_Pt3.png", "png");
 
+  //###PARTE NUOVA (6 MAGGIO 2026) ###################################################
+    //Per ogni fit di Pt, prendiamo i parametri della Gaussiana su cui vogliamo integrale
+
+    double A_Pt1= funz_Pt1->GetParameter(0);
+    double mu_Pt1=funz_Pt1->GetParameter(1);
+    double sigma_Pt1= funz_Pt1->GetParameter(2);
+    //
+     double A_Pt2= funz_Pt2->GetParameter(0);
+    double mu_Pt2=funz_Pt2->GetParameter(1);
+    double sigma_Pt2= funz_Pt2->GetParameter(2);
+    //
+     double A_Pt3= funz_Pt3->GetParameter(0);
+    double mu_Pt3=funz_Pt3->GetParameter(1);
+    double sigma_Pt3= funz_Pt3->GetParameter(2);
+    //
+     double A_Pt4= funz_Pt4->GetParameter(0);
+    double mu_Pt4=funz_Pt4->GetParameter(1);
+    double sigma_Pt4= funz_Pt4->GetParameter(2);
+    //
+     double A_Pt5= funz_Pt5->GetParameter(0);
+    double mu_Pt5=funz_Pt5->GetParameter(1);
+    double sigma_Pt5= funz_Pt5->GetParameter(2);
+//
+     double A_Pt6= funz_Pt6->GetParameter(0);
+    double mu_Pt6=funz_Pt6->GetParameter(1);
+    double sigma_Pt6= funz_Pt6->GetParameter(2);
+//
+//scriviamo le varie funzioni gaussiane per i segnali dei vari Pt
+TF1* gaus_Pt1= new TF1("gaus_Pt1", "gaus(0)", -10e4, 10e4);
+gaus_Pt1->FixParameter(0, A_Pt1);
+gaus_Pt1->FixParameter(1, mu_Pt1);
+gaus_Pt1->FixParameter(2, sigma_Pt1);
+//
+TF1* gaus_Pt2= new TF1("gaus_Pt2", "gaus(0)", -10e4, 10e4);
+gaus_Pt2->FixParameter(0, A_Pt2);
+gaus_Pt2->FixParameter(1, mu_Pt2);
+gaus_Pt2->FixParameter(2, sigma_Pt2);
+//
+TF1* gaus_Pt3= new TF1("gaus_Pt3", "gaus(0)", -10e4, 10e4);
+gaus_Pt3->FixParameter(0, A_Pt3);
+gaus_Pt3->FixParameter(1, mu_Pt3);
+gaus_Pt3->FixParameter(2, sigma_Pt3);
+//
+TF1* gaus_Pt4= new TF1("gaus_Pt4", "gaus(0)", -10e4, 10e4);
+gaus_Pt4->FixParameter(0, A_Pt4);
+gaus_Pt4->FixParameter(1, mu_Pt4);
+gaus_Pt4->FixParameter(2, sigma_Pt4);
+//
+TF1* gaus_Pt5= new TF1("gaus_Pt5", "gaus(0)", -10e4, 10e4);
+gaus_Pt5->FixParameter(0, A_Pt5);
+gaus_Pt5->FixParameter(1, mu_Pt5);
+gaus_Pt5->FixParameter(2, sigma_Pt5);
+//
+TF1* gaus_Pt6= new TF1("gaus_Pt6", "gaus(0)", -10e4, 10e4);
+gaus_Pt6->FixParameter(0, A_Pt6);
+gaus_Pt6->FixParameter(1, mu_Pt6);
+gaus_Pt6->FixParameter(2, sigma_Pt6);
+//
+//
+//calcolliamo i risultati dei vari integrali, da dividere per 0.5 vale a dire l'ampiezza dei bin di Pt; SE IL VALORE CAMBIA E' DA MODIFICARE MANUALMENTE!!!!!!!!!!
+double integrale_Pt1= gaus_Pt1->Integral(-10e4, 10e4)/0.5;
+double integrale_Pt2= gaus_Pt2->Integral(-10e4, 10e4)/0.5;
+double integrale_Pt3= gaus_Pt3->Integral(-10e4, 10e4)/0.5;
+double integrale_Pt4= gaus_Pt4->Integral(-10e4, 10e4)/0.5;
+double integrale_Pt5= gaus_Pt5->Integral(-10e4, 10e4)/0.5;
+double integrale_Pt6= gaus_Pt6->Integral(-10e4, 10e4)/0.5;
+//
+//GRAFICO SPETTRO IN PT per convenzione si associa come valore quello centrale di ogni bin.
+//ATTENTO! MODIFICA SE NECESSARIO IL NUMERO DI DATI DA INSERIRE 
+vector<double> Pt_x= {0.25, 0.75, 1.25, 1.75, 2.25, 2.75};
+vector<double> Pt_y={integrale_Pt1, integrale_Pt2, integrale_Pt3, integrale_Pt4, integrale_Pt5, integrale_Pt6};
+int size= Pt_x.size();
+TGraphErrors* spettro_Pt= new TGraphErrors(size, Pt_x.data(), Pt_y.data(), nullptr, nullptr );
+
+TCanvas* c21= new TCanvas("c21", "spettro in Pt", 800, 600);
+c21->cd();
+spettro_Pt->Draw("AP.");
+spettro_Pt->SetMarkerStyle(20);
+
+
 
 
     
@@ -248,270 +328,5 @@ void TESIt_tagli_particelle_vero(){
 
 
 
-
-
-
-
-
-
-
-
-    
-    /*++++++++++++++++DA QUI PARTE DEI PESI++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    
-    #################################################################################################################################
-    
-    ################################################################################################################################*/
-
-    //
-    /*sia per particelle che per antiparticelle, bisogna fare 3 istogrammi per ogni variabile: uno per la grandezza stessa uno per il fondo e 
-    uno per il segnale; per comodità, iniziamo dalle antiparticelle*/
-    //
-    //############################################################################################
-    //ISTOGRAMMI ANTIPARTICELLE
-    //
-    /*
-    TH1F* h_DCACascDaughters= new TH1F("h_DCACascDaughters","h_DCACascDaughters",50, 0, 0.1);
-    TH1F* h_DCACascDaughters_fondo= new TH1F("h_DCACascDaughters_fondo","h_DCACascDaughters", 50, 0, 0.1);
-    TH1F* h_DCACascDaughters_segnale= new TH1F("h_DCACascDaughters_segnale", "h_DCACascDaughters",50, 0, 0.1);
-    h_DCACascDaughters->SetLineColor(4);  // blu l'originale
-    h_DCACascDaughters_fondo->SetLineColor(2); //rosso il fondo
-    h_DCACascDaughters_segnale->SetLineColor(3); //verde segnale
-    //
-    TH1F* h_DCABachToPrimVtx= new TH1F("h_DCABachToPrimVtx","h_DCABachToPrimVtx",50, 0.1, 4);
-    TH1F* h_DCABachToPrimVtx_fondo= new TH1F("h_DCABachToPrimVtx_fondo","h_DCABachToPrimVtx", 50, 0.1, 4);
-    TH1F* h_DCABachToPrimVtx_segnale= new TH1F("h_DCABachToPrimVtx_segnale","h_DCABachToPrimVtx", 50, 0.1, 4);
-    h_DCABachToPrimVtx->SetLineColor(4);  // fucsia l'originale
-    h_DCABachToPrimVtx_fondo->SetLineColor(2); //rosso il fondo
-    h_DCABachToPrimVtx_segnale->SetLineColor(3); //verde segnale
-    //
-    TH1F* h_DCAV0Daughters= new TH1F("h_DCAV0Daughters","h_DCAV0Daughters",50, 0, 0.01);
-    TH1F* h_DCAV0Daughters_fondo= new TH1F("h_DCAV0Daughters_fondo","h_DCAV0Daughters", 50, 0, 0.01);
-    TH1F* h_DCAV0Daughters_segnale= new TH1F("h_DCAV0Daughters_segnale", "h_DCAV0Daughters",50, 0, 0.01);
-    h_DCAV0Daughters->SetLineColor(4);  // fucsia l'originale
-    h_DCAV0Daughters_fondo->SetLineColor(2); //rosso il fondo
-    h_DCAV0Daughters_segnale->SetLineColor(3); //verde segnale
-    //
-    TH1F* h_DCAV0ToPrimVtx= new TH1F("h_DCAV0ToPrimVtx","h_DCAV0ToPrimVtx",50, 0, 1);
-    TH1F* h_DCAV0ToPrimVtx_fondo= new TH1F("h_DCAV0ToPrimVtx_fondo","h_DCAV0ToPrimVtx", 50, 0, 1);
-    TH1F* h_DCAV0ToPrimVtx_segnale= new TH1F("h_DCAV0ToPrimVtx_segnale","h_DCAV0ToPrimVtx", 50, 0, 1);
-    h_DCAV0ToPrimVtx->SetLineColor(4);  // fucsia l'originale
-    h_DCAV0ToPrimVtx_fondo->SetLineColor(2); //rosso il fondo
-    h_DCAV0ToPrimVtx_segnale->SetLineColor(3); //verde segnale
-    //
-    TH1F* h_DCAPosToPrimVtx= new TH1F("h_DCAPosToPrimVtx","h_DCAPosToPrimVtx",50, 0, 1);
-    TH1F* h_DCAPosToPrimVtx_fondo= new TH1F("h_DCAPosToPrimVtx_fondo","h_DCAPosToPrimVtx", 50, 0, 1);
-    TH1F* h_DCAPosToPrimVtx_segnale= new TH1F("h_DCAPosToPrimVtx_segnale","h_DCAPosToPrimVtx", 50, 0, 1);
-    h_DCAPosToPrimVtx->SetLineColor(4);  // fucsia l'originale
-    h_DCAPosToPrimVtx_fondo->SetLineColor(2); //rosso il fondo
-    h_DCAPosToPrimVtx_segnale->SetLineColor(3); //verde segnale
-    //
-    TH1F* h_DCANegToPrimVtx= new TH1F("h_DCANegToPrimVtx","h_DCANegToPrimVtx",50, 0, 1);
-    TH1F* h_DCANegToPrimVtx_fondo= new TH1F("h_DCANegToPrimVtx_fondo","h_DCANegToPrimVtx", 50, 0, 1);
-    TH1F* h_DCANegToPrimVtx_segnale= new TH1F("h_DCANegToPrimVtx_segnale","h_DCANegToPrimVtx", 50, 0, 1);
-    h_DCANegToPrimVtx->SetLineColor(4);  // fucsia l'originale
-    h_DCANegToPrimVtx_fondo->SetLineColor(2); //rosso il fondo
-    h_DCANegToPrimVtx_segnale->SetLineColor(3); //verde segnale
-    //
-    TH1F* h_CascCosToPointingAngle= new TH1F("h_CascCosToPointingAngle","h_CascCosToPointingAngle",50, 0.999, 1.0002);
-    TH1F* h_CascCosToPointingAngle_fondo= new TH1F("h_CascCosToPointingAngle_fondo","h_CascCosToPointingAngle", 50, 0.999, 1.0002);
-    TH1F* h_CascCosToPointingAngle_segnale= new TH1F("h_CascCosToPointingAngle_segnale","h_CascCosToPointingAngle", 50, 0.999, 1.0002);
-    h_CascCosToPointingAngle->SetLineColor(4);  // fucsia l'originale
-    h_CascCosToPointingAngle_fondo->SetLineColor(2); //rosso il fondo
-    h_CascCosToPointingAngle_segnale->SetLineColor(3); //verde segnale
-    //
-    TH1F* h_CascDCAtoPVxy= new TH1F("h_CascDCAtoPVxy","h_CascDCAtoPVxy",50, 0, 0.2);
-    TH1F* h_CascDCAtoPVxy_fondo= new TH1F("h_CascDCAtoPVxy_fondo","h_CascDCAtoPVxy", 50, 0, 0.2);
-    TH1F* h_CascDCAtoPVxy_segnale= new TH1F("h_CascDCAtoPVxy_segnale","h_CascDCAtoPVxy", 50, 0, 0.2);
-    h_CascDCAtoPVxy->SetLineColor(4);  // fucsia l'originale
-    h_CascDCAtoPVxy_fondo->SetLineColor(2); //rosso il fondo
-    h_CascDCAtoPVxy_segnale->SetLineColor(3); //verde segnale
-    //
-    TH1F* h_CascRadius= new TH1F("h_CascRadius","h_CascRadius",50, 0, 10);
-    TH1F* h_CascRadius_fondo= new TH1F("h_CascRadius_fondo","h_CascRadius", 50, 0, 10);
-    TH1F* h_CascRadius_segnale= new TH1F("h_CascRadius_segnale","h_CascRadius", 50, 0, 10);
-    h_CascRadius->SetLineColor(4);  // fucsia l'originale
-    h_CascRadius_fondo->SetLineColor(2); //rosso il fondo
-    h_CascRadius_segnale->SetLineColor(3); //verde segnale
-    //
-    TH1F* h_V0CosPointingAngle= new TH1F("h_V0CosPointingAngle","h_V0CosPointingAngle",50, 0.999, 1.0001);
-    TH1F* h_V0CosPointingAngle_fondo= new TH1F("h_V0CosPointingAngle_fondo", "h_V0CosPointingAngle",50, 0.999,1.0001);
-    TH1F* h_V0CosPointingAngle_segnale= new TH1F("h_V0CosPointingAngle_segnale","h_V0CosPointingAngle", 50, 0.999, 1.0001);
-    h_V0CosPointingAngle->SetLineColor(4);  // fucsia l'originale
-    h_V0CosPointingAngle_fondo->SetLineColor(2); //rosso il fondo
-    h_V0CosPointingAngle_segnale->SetLineColor(3); //verde segnale
-    //
-    TH1F* h_V0Radius= new TH1F("h_V0Radius","h_V0Radius",50, 0, 20);
-    TH1F* h_V0Radius_fondo= new TH1F("h_V0Radius_fondo", "h_V0Radius",50, 0, 20);
-    TH1F* h_V0Radius_segnale= new TH1F("h_V0Radius_segnale","h_V0Radius", 50, 0, 20);
-    h_V0Radius->SetLineColor(4);  // fucsia l'originale
-    h_V0Radius_fondo->SetLineColor(2); //rosso il fondo
-    h_V0Radius_segnale->SetLineColor(3); //verde segnale
-    //
-    //
-    // 
-    //cominciamo scrivendo le funzioni per le particelle e antiparticelle; chiaramente, hanno i parametri fissati (quelli del fit)
-    //cominciamo dalle ANTIPARTICELLE
-    TF1* funz_segnale_anti_csi= new TF1("funz_segnale_anti_csi", " gaus(0)", 1.3, 1.35 );
-    funz_segnale_anti_csi->FixParameter(0, A1);
-    funz_segnale_anti_csi->FixParameter(1, mu1);
-    funz_segnale_anti_csi->FixParameter(2, sigma1);
-    //
-    TF1* funz_anti_csi= new TF1("funz_anti_csi", "gaus(0)+pol3(3)", 1.3, 1.35);
-    funz_anti_csi->FixParameter(0, A1);
-    funz_anti_csi->FixParameter(1, mu1);
-    funz_anti_csi->FixParameter(2, sigma1);
-    funz_anti_csi->FixParameter(3, p00);
-    funz_anti_csi->FixParameter(4, p01);
-    funz_anti_csi->FixParameter(5, p02);
-    funz_anti_csi->FixParameter(6, p03);
-    //
-    TF1* funz_fondo_anti_csi= new TF1("funz_fondo_anti_csi", "pol3(0)", 1.3, 1.35);
-    funz_fondo_anti_csi->FixParameter(0, p00);
-    funz_fondo_anti_csi->FixParameter(1, p01);
-    funz_fondo_anti_csi->FixParameter(2, p02);
-    funz_fondo_anti_csi->FixParameter(3, p03);
-    //
-    //ricordiamo che len è una variabile che contiene il numero di elementi del tree
-    //
-    double W=0; //è il weight
-    double a_W=0; //è 1-W, l'anti-peso :)
-    //SI RIEMPIONO GLI ISTOGRAMMI
-    for(int i=0; i<len; i++){
-        tree->GetEntry(i);
-        if(charge<=0 && DCACascDaughters<0.1 && DCABachToPrimVtx >0.1 &&  DCAV0Daughters<0.01 && DCAV0ToPrimVtx<1 && DCAPosToPrimVtx <1 && DCANegToPrimVtx <1 && CascCosToPointingAngle > 0.999 && CascDCAtoPVxy <0.2 && CascRadius <10 && V0CosPointingAngle>0.999 &&  V0Radius <20 ){//piglio solo le anti csi che hanno carica maggiore di 0
-            W= funz_segnale_anti_csi->Eval(mass_csi)/funz_anti_csi->Eval(mass_csi);//valore del peso
-            a_W= 1-W; //valore dell'antipeso}
-            h_DCACascDaughters->Fill(DCACascDaughters); //segnale
-            h_DCACascDaughters_fondo->Fill(DCACascDaughters, a_W); 
-            h_DCACascDaughters_segnale->Fill(DCACascDaughters, W);
-            //
-            h_DCABachToPrimVtx->Fill(DCABachToPrimVtx);  // fucsia l'originale
-            h_DCABachToPrimVtx_fondo->Fill(DCABachToPrimVtx, a_W); //rosso il fondo
-            h_DCABachToPrimVtx_segnale->Fill(DCABachToPrimVtx, W);
-            //
-            h_DCAV0Daughters->Fill(DCAV0Daughters);  // fucsia l'originale
-            h_DCAV0Daughters_fondo->Fill(DCAV0Daughters, a_W);  //rosso il fondo
-            h_DCAV0Daughters_segnale->Fill(DCAV0Daughters, W);
-            //
-            h_DCAV0ToPrimVtx->Fill(DCAV0ToPrimVtx); // fucsia l'originale
-            h_DCAV0ToPrimVtx_fondo->Fill(DCAV0ToPrimVtx, a_W); //rosso il fondo
-            h_DCAV0ToPrimVtx_segnale->Fill(DCAV0ToPrimVtx, W);
-            //
-            h_DCAPosToPrimVtx->Fill(DCAPosToPrimVtx);  // fucsia l'originale
-            h_DCAPosToPrimVtx_fondo->Fill(DCAPosToPrimVtx, a_W); //rosso il fondo
-            h_DCAPosToPrimVtx_segnale->Fill(DCAPosToPrimVtx, W); 
-            //
-            h_DCANegToPrimVtx->Fill(DCANegToPrimVtx); // fucsia l'originale
-            h_DCANegToPrimVtx_fondo->Fill(DCANegToPrimVtx, a_W); //rosso il fondo
-            h_DCANegToPrimVtx_segnale->Fill(DCANegToPrimVtx, W);
-            //
-            h_CascCosToPointingAngle->Fill(CascCosToPointingAngle);  // fucsia l'originale
-            h_CascCosToPointingAngle_fondo->Fill(CascCosToPointingAngle, a_W);  //rosso il fondo
-            h_CascCosToPointingAngle_segnale->Fill(CascCosToPointingAngle, W);
-            //
-            h_CascDCAtoPVxy->Fill(CascDCAtoPVxy);  // fucsia l'originale
-            h_CascDCAtoPVxy_fondo->Fill(CascDCAtoPVxy, a_W); //rosso il fondo
-            h_CascDCAtoPVxy_segnale->Fill(CascDCAtoPVxy, W);
-            //
-            h_CascRadius->Fill(CascRadius); // fucsia l'originale
-            h_CascRadius_fondo->Fill(CascRadius, a_W);  //rosso il fondo
-            h_CascRadius_segnale->Fill(CascRadius, W); 
-            //
-            h_V0CosPointingAngle->Fill(V0CosPointingAngle); // fucsia l'originale
-            h_V0CosPointingAngle_fondo->Fill(V0CosPointingAngle, a_W); //rosso il fondo
-            h_V0CosPointingAngle_segnale->Fill(V0CosPointingAngle, W);
-            //
-            h_V0Radius->Fill(V0Radius);  // fucsia l'originale
-            h_V0Radius_fondo->Fill(V0Radius, a_W); //rosso il fondo
-            h_V0Radius_segnale->Fill(V0Radius, W); //verde segnale
-        }
-    }
-    //
-    TCanvas* c2= new TCanvas("c2", "foglio 1 CSI", 1000, 800);
-    c2->Divide(2, 2);
-    TCanvas* c3= new TCanvas("c3", "foglio 2 CSI", 1000, 800);
-    c3->Divide(2,2);
-    TCanvas* c4= new TCanvas("c4", "foglio 3 CSI", 1000, 800);
-    c4->Divide(2,2);
-    //
-    c2->cd(1);
-   
-    h_DCACascDaughters->DrawNormalized("HIST ");
-    h_DCACascDaughters->SetTitle("h_DCACascDaughters");
-
-    h_DCACascDaughters_fondo->DrawNormalized("HIST SAME"); //rosso il fondo
-   
-    h_DCACascDaughters_segnale->DrawNormalized("HIST SAME ");
-    
-    //
-    c2->cd(2);
-    h_DCABachToPrimVtx->DrawNormalized(); 
-    h_DCABachToPrimVtx->SetTitle("h_DCABachToPrimVtx");
-    h_DCABachToPrimVtx_fondo->DrawNormalized("SAME"); //rosso il fondo
-    h_DCABachToPrimVtx_segnale->DrawNormalized("SAME");
-    //
-    c2->cd(3);
-    h_DCAV0Daughters->DrawNormalized(); 
-    h_DCAV0Daughters->SetTitle("h_DCAV0Daughters");
-    h_DCAV0Daughters_fondo->DrawNormalized("SAME");//rosso il fondo
-    h_DCAV0Daughters_segnale->DrawNormalized("SAME");
-    //
-    c2->cd(4);
-    h_DCAV0ToPrimVtx->DrawNormalized(); // fucsia l'originale
-    h_DCAV0ToPrimVtx->SetTitle("h_DCAV0ToPrimVtx");
-    h_DCAV0ToPrimVtx_fondo->DrawNormalized("SAME"); //rosso il fondo
-    h_DCAV0ToPrimVtx_segnale->DrawNormalized("SAME");
-    //
-    c3->cd(1);
-    h_DCAPosToPrimVtx->DrawNormalized(); // fucsia l'originale
-    h_DCAPosToPrimVtx->SetTitle("h_DCAPosToPrimVtx");
-    h_DCAPosToPrimVtx_fondo->DrawNormalized("SAME"); //rosso il fondo
-    h_DCAPosToPrimVtx_segnale->DrawNormalized("SAME");
-    //
-    c3->cd(2);
-    h_DCANegToPrimVtx->DrawNormalized(); // fucsia l'originale
-    h_DCANegToPrimVtx->SetTitle("h_DCANegToPrimVtx");
-    h_DCANegToPrimVtx_fondo->DrawNormalized("SAME");//rosso il fondo
-    h_DCANegToPrimVtx_segnale->DrawNormalized("SAME"); //verde segnale
-    //
-    c3->cd(3);
-    h_CascCosToPointingAngle->DrawNormalized(); 
-    h_CascCosToPointingAngle->SetTitle("h_CascCosToPointingAngle");// fucsia l'originale
-    h_CascCosToPointingAngle_fondo->DrawNormalized("SAME");//rosso il fondo
-    h_CascCosToPointingAngle_segnale->DrawNormalized("SAME"); //verde segnale
-    //
-    c3->cd(4);
-    h_CascDCAtoPVxy->DrawNormalized();  // fucsia l'originale
-    h_CascDCAtoPVxy->SetTitle("h_CascDCAtoPVxy");
-    h_CascDCAtoPVxy_fondo->DrawNormalized("SAME");  //rosso il fondo
-    h_CascDCAtoPVxy_segnale->DrawNormalized("SAME");  //verde segnale
-    //
-    c4->cd(1);
-    h_CascRadius->DrawNormalized(); 
-    h_CascRadius->SetTitle("h_CascRadius"); 
-    h_CascRadius_fondo->DrawNormalized("SAME");//rosso il fondo
-    h_CascRadius_segnale->DrawNormalized("SAME");
-    //
-    c4->cd(2);
-    h_V0CosPointingAngle->DrawNormalized();// fucsia l'originale
-    h_V0CosPointingAngle->SetTitle("h_V0CosPointingAngle");
-    h_V0CosPointingAngle_fondo->DrawNormalized("SAME");//rosso il fondo
-    h_V0CosPointingAngle_segnale->DrawNormalized("SAME");
-    //
-    c4->cd(3);
-    h_V0Radius->DrawNormalized(); // fucsia l'originale
-    h_V0Radius->SetTitle("h_V0Radius");
-    h_V0Radius_fondo->DrawNormalized("SAME");//rosso il fondo
-    h_V0Radius_segnale->DrawNormalized("SAME");//verde segnale
-    //
-    TFile* output= new TFile("grafici_parametri.root", "UPDATE");
-    c1->Write("csi FIT MASSE INVARIANTI con tagli veri");
-    c2->Write("csi foglio 2 con tagli veri");
-    c3->Write("csi foglio 3 veri");
-    c4->Write("csi foglio 4 con tagli veri");
-    output->Close();
-    */
-    
 
 }

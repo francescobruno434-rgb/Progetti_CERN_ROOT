@@ -319,7 +319,8 @@ TGraphErrors* spettro_Pt= new TGraphErrors(size, Pt_x.data(), Pt_y.data(), nullp
 
 TCanvas* c21= new TCanvas("c21", "spettro in Pt", 800, 600);
 c21->cd();
-spettro_Pt->Draw();
+spettro_Pt->SetMarkerStyle(20);
+spettro_Pt->Draw("AP.");
 
 
 
