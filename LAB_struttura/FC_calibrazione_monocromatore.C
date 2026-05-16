@@ -129,6 +129,12 @@ void FC_calibrazione_monocromatore(){
     fit->SetParameters(350, 0.2, 0, 0);
     TFitResultPtr r = gr1->Fit(fit, "S");
     TMatrixDSym cov = r->GetCovarianceMatrix();
+    double *array= cov.GetMatrixArray();
+    cout<<"elementi GetMatrixArray"<<endl;
+    for (int i=0; i<4; i++){
+        cout<<array[i]<< " ";
+    }
+    cout<<" "<<endl;
     cov.Print();
     gr1->Draw();
 cout<<"p-value é: " << fit->GetProb()<<endl;
