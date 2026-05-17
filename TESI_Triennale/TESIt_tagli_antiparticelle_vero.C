@@ -193,33 +193,69 @@ void TESIt_tagli_antiparticelle_vero(){
     c11->cd(0);
 
     c11->cd(1);
-    // hmass_Pt1->Fit("funz_Pt1");
+    TFitResultPtr rPt1= hmass_Pt1->Fit("funz_Pt1", "S");
     hmass_Pt1->Draw();
+    TMatrixDSym cov_Pt1= rPt1->GetCovarianceMatrix();
+    double* array_cov_Pt1_b= cov_Pt1.GetSub(0, 2, 0, 2 ).GetMatrixArray();
+    vector<double> array_cov_Pt1={};
+    for(int i=0; i<9; i++){
+        array_cov_Pt1.push_back(array_cov_Pt1_b[i]);
+    }
     //
     
     c11->cd(2);
-     hmass_Pt2->Fit("funz_Pt2");
+      TFitResultPtr rPt2= hmass_Pt2->Fit("funz_Pt2", "S");
     hmass_Pt2->Draw();
+    TMatrixDSym cov_Pt2= rPt2->GetCovarianceMatrix();
+    double* array_cov_Pt2_b= cov_Pt2.GetSub(0, 2, 0, 2 ).GetMatrixArray();
+     vector<double> array_cov_Pt2={};
+    for(int i=0; i<9; i++){
+        array_cov_Pt2.push_back(array_cov_Pt2_b[i]);
+    }
     //
     
     c11->cd(3);
-     hmass_Pt3->Fit("funz_Pt3");
+    TFitResultPtr rPt3= hmass_Pt3->Fit("funz_Pt3", "S");
     hmass_Pt3->Draw();
+    TMatrixDSym cov_Pt3= rPt3->GetCovarianceMatrix();
+    double* array_cov_Pt3_b= cov_Pt3.GetSub(0, 2, 0, 2 ).GetMatrixArray();
+     vector<double> array_cov_Pt3={};
+    for(int i=0; i<9; i++){
+        array_cov_Pt3.push_back(array_cov_Pt3_b[i]);
+    }
     //
    
    c11->cd(4);
-    hmass_Pt4->Fit("funz_Pt4");
+      TFitResultPtr rPt4= hmass_Pt4->Fit("funz_Pt4", "S");
     hmass_Pt4->Draw();
+    TMatrixDSym cov_Pt4= rPt4->GetCovarianceMatrix();
+    double* array_cov_Pt4_b= cov_Pt4.GetSub(0, 2, 0, 2 ).GetMatrixArray();
+     vector<double> array_cov_Pt4={};
+    for(int i=0; i<9; i++){
+        array_cov_Pt4.push_back(array_cov_Pt4_b[i]);
+    }
     //
    
   c12->cd(1);
-   hmass_Pt5->Fit("funz_Pt5");
+   TFitResultPtr rPt5= hmass_Pt5->Fit("funz_Pt5", "S");
     hmass_Pt5->Draw();
+    TMatrixDSym cov_Pt5= rPt5->GetCovarianceMatrix();
+    double* array_cov_Pt5_b= cov_Pt5.GetSub(0, 2, 0, 2 ).GetMatrixArray();
+     vector<double> array_cov_Pt5={};
+    for(int i=0; i<9; i++){
+        array_cov_Pt5.push_back(array_cov_Pt5_b[i]);
+    }
     //
     
       c12->cd(2);
-     hmass_Pt6->Fit("funz_Pt6");
+      TFitResultPtr rPt6= hmass_Pt6->Fit("funz_Pt6", "S");
     hmass_Pt6->Draw();
+    TMatrixDSym cov_Pt6= rPt6->GetCovarianceMatrix();
+    double* array_cov_Pt6_b= cov_Pt6.GetSub(0, 2, 0, 2 ).GetMatrixArray();
+     vector<double> array_cov_Pt6={};
+    for(int i=0; i<9; i++){
+        array_cov_Pt6.push_back(array_cov_Pt6_b[i]);
+    }
     //
    
       c12->cd(3);
@@ -271,57 +307,176 @@ void TESIt_tagli_antiparticelle_vero(){
     double sigma_Pt6= funz_Pt6->GetParameter(2);
 //
 //scriviamo le varie funzioni gaussiane per i segnali dei vari Pt
-TF1* gaus_Pt1= new TF1("gaus_Pt1", "gaus(0)", -10e4, 10e4);
+TF1* gaus_Pt1= new TF1("gaus_Pt1", "gaus(0)",mu_Pt1-3*sigma_Pt1, mu_Pt1+3*sigma_Pt1);
 gaus_Pt1->FixParameter(0, A_Pt1);
 gaus_Pt1->FixParameter(1, mu_Pt1);
 gaus_Pt1->FixParameter(2, sigma_Pt1);
 //
-TF1* gaus_Pt2= new TF1("gaus_Pt2", "gaus(0)", -10e4, 10e4);
+TF1* gaus_Pt2= new TF1("gaus_Pt2", "gaus(0)", mu_Pt2-3*sigma_Pt2, mu_Pt2+3*sigma_Pt2);
 gaus_Pt2->FixParameter(0, A_Pt2);
 gaus_Pt2->FixParameter(1, mu_Pt2);
 gaus_Pt2->FixParameter(2, sigma_Pt2);
 //
-TF1* gaus_Pt3= new TF1("gaus_Pt3", "gaus(0)", -10e4, 10e4);
+TF1* gaus_Pt3= new TF1("gaus_Pt3", "gaus(0)", mu_Pt3-3*sigma_Pt3, mu_Pt3+3*sigma_Pt3);
 gaus_Pt3->FixParameter(0, A_Pt3);
 gaus_Pt3->FixParameter(1, mu_Pt3);
 gaus_Pt3->FixParameter(2, sigma_Pt3);
 //
-TF1* gaus_Pt4= new TF1("gaus_Pt4", "gaus(0)", -10e4, 10e4);
+TF1* gaus_Pt4= new TF1("gaus_Pt4", "gaus(0)", mu_Pt4-3*sigma_Pt4, mu_Pt4+3*sigma_Pt4);
 gaus_Pt4->FixParameter(0, A_Pt4);
 gaus_Pt4->FixParameter(1, mu_Pt4);
 gaus_Pt4->FixParameter(2, sigma_Pt4);
 //
-TF1* gaus_Pt5= new TF1("gaus_Pt5", "gaus(0)", -10e4, 10e4);
+TF1* gaus_Pt5= new TF1("gaus_Pt5", "gaus(0)", mu_Pt5-3*sigma_Pt5, mu_Pt5+3*sigma_Pt5);
 gaus_Pt5->FixParameter(0, A_Pt5);
 gaus_Pt5->FixParameter(1, mu_Pt5);
 gaus_Pt5->FixParameter(2, sigma_Pt5);
 //
-TF1* gaus_Pt6= new TF1("gaus_Pt6", "gaus(0)", -10e4, 10e4);
+TF1* gaus_Pt6= new TF1("gaus_Pt6", "gaus(0)", mu_Pt6-3*sigma_Pt6, mu_Pt6+3*sigma_Pt6);
 gaus_Pt6->FixParameter(0, A_Pt6);
 gaus_Pt6->FixParameter(1, mu_Pt6);
 gaus_Pt6->FixParameter(2, sigma_Pt6);
 //
 //
 //calcolliamo i risultati dei vari integrali, da dividere per 0.5 vale a dire l'ampiezza dei bin di Pt; SE IL VALORE CAMBIA E' DA MODIFICARE MANUALMENTE!!!!!!!!!!
-double integrale_Pt1= gaus_Pt1->Integral(-10e4, 10e4)/0.5;
-double integrale_Pt2= gaus_Pt2->Integral(-10e4, 10e4)/0.5;
-double integrale_Pt3= gaus_Pt3->Integral(-10e4, 10e4)/0.5;
-double integrale_Pt4= gaus_Pt4->Integral(-10e4, 10e4)/0.5;
-double integrale_Pt5= gaus_Pt5->Integral(-10e4, 10e4)/0.5;
-double integrale_Pt6= gaus_Pt6->Integral(-10e4, 10e4)/0.5;
+//INTEGRALI IN 3 SIGMA (ORA SON TROPPO PICCOLE E  ADDIRITTURA ADDIRITTURA NEGATIVE, GLI INTEGRALI VENGONO INSENSATI)
+
+double integrale_Pt1= gaus_Pt1->Integral(mu_Pt1-3*sigma_Pt1, mu_Pt1+3*sigma_Pt1)/0.5;
+double integrale_Pt2= gaus_Pt2->Integral(mu_Pt2-3*sigma_Pt2, mu_Pt2+3*sigma_Pt2)/0.5;
+double integrale_Pt3= gaus_Pt3->Integral(mu_Pt3-3*sigma_Pt3, mu_Pt3+3*sigma_Pt3)/0.5;
+double integrale_Pt4= gaus_Pt4->Integral(mu_Pt4-3*sigma_Pt4, mu_Pt4+3*sigma_Pt4)/0.5;
+double integrale_Pt5= gaus_Pt5->Integral(mu_Pt5-3*sigma_Pt5, mu_Pt5+3*sigma_Pt5)/0.5;
+double integrale_Pt6= gaus_Pt6->Integral(mu_Pt6-3*sigma_Pt6, mu_Pt6+3*sigma_Pt6)/0.5;
+
+
+//ERRORI SUGLI INTEGRALI
+double err_integrale_Pt1= gaus_Pt1->IntegralError(mu_Pt1-3*sigma_Pt1, mu_Pt1+3*sigma_Pt1, nullptr, array_cov_Pt1.data())/0.5;
+double err_integrale_Pt2= gaus_Pt2->IntegralError(mu_Pt2-3*sigma_Pt2, mu_Pt2+3*sigma_Pt2, nullptr, array_cov_Pt2.data())/0.5;
+double err_integrale_Pt3= gaus_Pt3->IntegralError(mu_Pt3-3*sigma_Pt3, mu_Pt3+3*sigma_Pt3, nullptr, array_cov_Pt3.data())/0.5;
+double err_integrale_Pt4= gaus_Pt4->IntegralError(mu_Pt4-3*sigma_Pt4, mu_Pt4+3*sigma_Pt4, nullptr, array_cov_Pt4.data())/0.5;
+double err_integrale_Pt5= gaus_Pt5->IntegralError(mu_Pt5-3*sigma_Pt5, mu_Pt5+3*sigma_Pt5, nullptr, array_cov_Pt5.data())/0.5;
+double err_integrale_Pt6= gaus_Pt6->IntegralError(mu_Pt6-3*sigma_Pt6, mu_Pt6+3*sigma_Pt6, nullptr, array_cov_Pt6.data())/0.5;
+
 //
+//
+//GRAFICO SPETTRO IN PT per convenzione si associa come valore quello centrale di ogni bin.
+//ATTENTO! MODIFICA SE NECESSARIO IL NUMERO DI DATI DA INSERIRE 
+cout<<"l'errore su Pt1 è "<< err_integrale_Pt1<<endl;
+cout<<"matrice di covarianza"<<endl;
+for (int i=0; i<9;i++){
+    cout<<array_cov_Pt1[i]<< " ";
+}
+cout<<" "<<endl;
+//
+cout<<"matrice di covarianza"<<endl;
+for (int i=0; i<9;i++){
+   cout<<array_cov_Pt2[i]<< " ";
+}
+cout<<" "<<endl;
+//
+cout<<"matrice di covarianza"<<endl;
+for (int i=0; i<9;i++){
+     cout<<array_cov_Pt3[i]<< " ";
+}
+cout<<" "<<endl;
+//
+cout<<"matrice di covarianza"<<endl;
+for (int i=0; i<9;i++){
+   cout<<array_cov_Pt4[i]<< " ";
+}
+cout<<" "<<endl;
+//
+cout<<"matrice di covarianza"<<endl;
+for (int i=0; i<9;i++){
+    cout<<array_cov_Pt5[i]<< " ";
+}
+cout<<" "<<endl;
+//
+cout<<"matrice di covarianza"<<endl;
+for (int i=0; i<9;i++){
+    cout<<array_cov_Pt6[i]<< " ";
+}
+cout<<" "<<endl;
+
+
+
+
+
 //GRAFICO SPETTRO IN PT per convenzione si associa come valore quello centrale di ogni bin.
 //ATTENTO! MODIFICA SE NECESSARIO IL NUMERO DI DATI DA INSERIRE 
 vector<double> Pt_x= {0.25, 0.75, 1.25, 1.75, 2.25, 2.75};
 vector<double> Pt_y={integrale_Pt1, integrale_Pt2, integrale_Pt3, integrale_Pt4, integrale_Pt5, integrale_Pt6};
+vector<double> err_Pt_y={err_integrale_Pt1, err_integrale_Pt2,err_integrale_Pt3,err_integrale_Pt4,err_integrale_Pt5, err_integrale_Pt6};
 int size= Pt_x.size();
-TGraphErrors* spettro_Pt= new TGraphErrors(size, Pt_x.data(), Pt_y.data(), nullptr, nullptr );
+TGraphErrors* spettro_Pt= new TGraphErrors(size, Pt_x.data(), Pt_y.data(), nullptr, err_Pt_y.data());
 
 TCanvas* c21= new TCanvas("c21", "spettro in Pt", 800, 600);
 c21->cd();
-spettro_Pt->SetMarkerStyle(20);
 spettro_Pt->Draw("AP.");
+spettro_Pt->SetMarkerStyle(20);
 
+
+
+
+//######PARTE NUOVA (ERRORI INTEGRALE) 16/05/2026###########################################
+//l'errore sull'integral viene calcolato nelle righe precedenti con il metodo della matrice di covarianza
+//qui noi lo calcoliamo con il metodo dell'errore relativo
+//
+//integro tutto l'istogramma in un interno di mu+-3 sigma 
+//
+double hist_Pt1_integral= hmass_Pt1->Integral(mu_Pt1-3*sigma_Pt1, mu_Pt1+ 3* sigma_Pt1) ;
+double hist_Pt2_integral= hmass_Pt2->Integral(mu_Pt2-3*sigma_Pt2, mu_Pt2+ 3* sigma_Pt2) ;
+double hist_Pt3_integral= hmass_Pt3->Integral(mu_Pt3-3*sigma_Pt3, mu_Pt3+ 3* sigma_Pt3) ;
+double hist_Pt4_integral= hmass_Pt4->Integral(mu_Pt4-3*sigma_Pt4, mu_Pt4+ 3* sigma_Pt4) ;
+double hist_Pt5_integral= hmass_Pt5->Integral(mu_Pt5-3*sigma_Pt5, mu_Pt5+ 3* sigma_Pt5) ;
+double hist_Pt6_integral= hmass_Pt6->Integral(mu_Pt6-3*sigma_Pt6, mu_Pt6+ 3* sigma_Pt6) ;
+cout<<"hist_Pt1_integral "<< hist_Pt1_integral<<endl;
+//
+//qui si calcola l'errore relativo
+double err_rel_integral_Pt1= pow(hist_Pt1_integral, 0.5)/hist_Pt1_integral; 
+double err_rel_integral_Pt2= pow(hist_Pt2_integral, 0.5)/hist_Pt2_integral;
+double err_rel_integral_Pt3= pow(hist_Pt3_integral, 0.5)/hist_Pt3_integral;
+double err_rel_integral_Pt4= pow(hist_Pt4_integral, 0.5)/hist_Pt4_integral;
+double err_rel_integral_Pt5= pow(hist_Pt5_integral, 0.5)/hist_Pt5_integral;
+double err_rel_integral_Pt6= pow(hist_Pt6_integral, 0.5)/hist_Pt6_integral;
+cout<<"err_rel_integrale_Pt1 "<<err_rel_integral_Pt1<<endl;
+//
+//qui si trova l'errore assoluto sugli integrali delle gaussiane
+double err_ass_integrale_Pt1= err_rel_integral_Pt1*integrale_Pt1;
+double err_ass_integrale_Pt2= err_rel_integral_Pt2*integrale_Pt2;
+double err_ass_integrale_Pt3= err_rel_integral_Pt3*integrale_Pt3;
+double err_ass_integrale_Pt4= err_rel_integral_Pt4*integrale_Pt4;
+double err_ass_integrale_Pt5= err_rel_integral_Pt5*integrale_Pt5;
+double err_ass_integrale_Pt6= err_rel_integral_Pt6*integrale_Pt6;
+//
+//qui adesso rifacciamo i grafici con errori nuovi
+vector<double> err_Pt_y_2={err_ass_integrale_Pt1, err_ass_integrale_Pt2, err_ass_integrale_Pt3, err_ass_integrale_Pt4, err_ass_integrale_Pt5, err_ass_integrale_Pt6};
+
+
+
+//paragoniamo i due tipi di errori
+cout<<"###############################################################################"<<endl;
+cout<<"PARAGONE TRA GLI ERRORI OTTENUTI NEI 2 CASI \n"<< endl;
+cout<<"Errori con martrice di covarianza: "<<endl;
+for(vector<double>::const_iterator it= err_Pt_y.begin(); it != err_Pt_y.end(); it++){
+    cout<< *it<< " ";
+}
+cout<<" "<<endl;
+//
+cout<<"Errori senza martrice di covarianza (errori relativi): "<<endl;
+for(vector<double>::const_iterator it= err_Pt_y_2.begin(); it != err_Pt_y_2.end(); it++){
+    cout<< *it<< " ";
+}
+cout<<" "<<endl;
+//
+//facciamo un secondo grafico usando nuovi errori
+TCanvas* c22= new TCanvas("c22", "grafico con errori senza matrice di covarianza", 800, 600);
+TGraphErrors* spettro_Pt_err2= new TGraphErrors(size, Pt_x.data(), Pt_y.data(), nullptr, err_Pt_y_2.data() );
+c22->cd();
+spettro_Pt_err2->Draw("AP.");
+spettro_Pt_err2->SetMarkerStyle(21);
+
+}
 
 
 
@@ -329,4 +484,3 @@ spettro_Pt->Draw("AP.");
     
 
 
-}
